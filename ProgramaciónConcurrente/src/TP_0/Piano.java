@@ -1,3 +1,8 @@
+package TP_0;
+
+
+import TP_0.Instrumento;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -7,18 +12,17 @@
  *
  * @author galin
  */
-import java.util.*;
-
-public class Instrumento {
+public class Piano extends Instrumento {
 
     public void tocar() {
-        System.out.println("Intrumento.tocar()");
+        System.out.println("Piano.tocar()");
     }
 
     public String tipo() {
-        return "Intrumento";
+        return "Piano";
     }
 
     public void afinar() {
     }
+
 }
