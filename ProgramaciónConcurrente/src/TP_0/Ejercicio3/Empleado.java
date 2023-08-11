@@ -8,7 +8,7 @@ package TP_0.Ejercicio3;
  *
  * @author galin
  */
-public class Empleado extends Persona {
+abstract class Empleado extends Persona {
 
     private String legajo;
     private int antiguedad;

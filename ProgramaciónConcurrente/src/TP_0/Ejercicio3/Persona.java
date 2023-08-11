@@ -8,7 +8,7 @@ package TP_0.Ejercicio3;
  *
  * @author galin
  */
-public class Persona {
+abstract class Persona {
 
     private String nombre;
     private int dni;

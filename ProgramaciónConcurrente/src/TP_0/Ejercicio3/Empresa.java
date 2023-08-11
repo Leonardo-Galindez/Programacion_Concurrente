@@ -65,7 +65,7 @@ public class Empresa {
     public void setListaDinamica(List<Empleado> listaDinamica) {
         this.colEmpleados = listaDinamica;
     }
-
+    
     //metodo que genera una coleccion de empleados con antiguedad mayor a 10 años
     public List<Empleado> generarColeccionAntiguedad() {
         List<Empleado> colAntiguedad = new ArrayList<>();

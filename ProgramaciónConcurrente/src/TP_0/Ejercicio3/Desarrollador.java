@@ -12,6 +12,7 @@ public class Desarrollador extends Empleado {
 
     private String titulo;
     private String rol;
+    private static final int sueldo = 10000;
 
     public Desarrollador(String titulo, String rol, String legajo, int antiguedad, String nombre, int dni, String direccion, String fechaNacimiento, String sexo) {
         super(legajo, antiguedad, nombre, dni, direccion, fechaNacimiento, sexo);
