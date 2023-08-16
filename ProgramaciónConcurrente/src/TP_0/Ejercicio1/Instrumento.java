@@ -4,21 +4,19 @@ package TP_0.Ejercicio1;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author galin
  */
-import java.util.*;
 
-public class Instrumento {
+class Instrumento {
 
     public void tocar() {
-        System.out.println("Intrumento.tocar()");
+        System.out.println("Instrumento.tocar()");
     }
 
     public String tipo() {
-        return "Intrumento";
+        return "Instrumento";
     }
 
     public void afinar() {

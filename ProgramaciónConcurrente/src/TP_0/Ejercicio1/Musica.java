@@ -9,8 +9,11 @@ package TP_0.Ejercicio1;
  * @author galin
  */
 public class Musica {
+// No importa el tipo de Instrumento,
+// seguirá funcionando debido a Polimorfismo:
 
     static void afinar(Instrumento i) {
+// ...
         i.tocar();
     }
 
@@ -18,11 +21,13 @@ public class Musica {
         for (int i = 0; i < e.length; i++) {
             afinar(e[i]);
         }
+
     }
 
     public static void main(String[] args) {
         Instrumento[] orquesta = new Instrumento[5];
         int i = 0;
+// Up-casting al asignarse el Arreglo
         orquesta[i++] = new Guitarra();
         orquesta[i++] = new Piano();
         orquesta[i++] = new Saxofon();
@@ -30,4 +35,4 @@ public class Musica {
         orquesta[i++] = new Ukelele();
         afinarTodo(orquesta);
     }
-}
+} //clase Musica

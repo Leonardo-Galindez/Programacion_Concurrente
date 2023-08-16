@@ -8,11 +8,7 @@ package TP_0.Ejercicio1;
  *
  * @author galin
  */
-public class Piano extends Instrumento {
-
-    Piano() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+class Piano extends Instrumento {
 
     public void tocar() {
         System.out.println("Piano.tocar()");
@@ -24,5 +20,4 @@ public class Piano extends Instrumento {
 
     public void afinar() {
     }
-
 }

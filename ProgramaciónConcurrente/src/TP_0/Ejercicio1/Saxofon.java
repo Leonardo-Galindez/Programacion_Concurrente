@@ -10,10 +10,6 @@ package TP_0.Ejercicio1;
  */
 public class Saxofon extends Instrumento {
 
-    Saxofon() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
     public void tocar() {
         System.out.println("Saxofon.tocar()");
     }
@@ -24,5 +20,5 @@ public class Saxofon extends Instrumento {
 
     public void afinar() {
     }
-;
+
 }
