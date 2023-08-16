@@ -1,4 +1,4 @@
-package TP_0;
+package TP_0.Ejercicio1;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
