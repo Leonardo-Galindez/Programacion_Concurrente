@@ -18,11 +18,8 @@ public class Sanador implements Runnable {
 
     @Override
     public void run() {
-        synchronized (energia) {
-            System.out.println("Sanador cura 3 unidades de Energia");
-            energia.modificarEnergia(3);
-            System.out.println("Energia restante:" + energia.ontenerEnergia());
-        }
-    }
 
+        System.out.println("Sanador cura 3 unidades de Energia");
+        energia.setEnergia(energia.ontenerEnergia() + 3);
+    }
 }

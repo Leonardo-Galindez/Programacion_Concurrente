@@ -18,11 +18,15 @@ public class Energia {
 
     //Exclusion mutua
     //lock de sincrinizado
-    public synchronized int ontenerEnergia() {
+    public int ontenerEnergia() {
         return this.valor;
     }
-
-    public synchronized void modificarEnergia(int modificacion) {
+    
+    public  void modificarEnergia(int modificacion) {
         this.valor = this.valor + modificacion;
+    }
+
+    public  void setEnergia(int nuevaEnergia) {
+        this.valor = nuevaEnergia;
     }
 }

@@ -15,13 +15,12 @@ public class CriaturaOscura implements Runnable {
     public CriaturaOscura(Energia energia) {
         this.energia = energia;
     }
-
+    
     @Override
     public void run() {
-        synchronized (energia) {
-            System.out.println("Criatura Oscura drena 3 unidades de Energia");
-            energia.modificarEnergia(-3);
-            System.out.println("Energia restante:" + energia.ontenerEnergia());
-        }
+        
+        System.out.println("Criatura Oscura drena 3 unidades de Energia");
+        energia.setEnergia(energia.ontenerEnergia() - 3);
+        
     }
 }

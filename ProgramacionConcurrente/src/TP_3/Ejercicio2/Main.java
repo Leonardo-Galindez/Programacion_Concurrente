@@ -4,6 +4,9 @@
  */
 package TP_3.Ejercicio2;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author galin
@@ -21,11 +24,15 @@ public class Main {
 
         criaturaThread.start();
         sanadorThread.start();
+        
+        try {
+            criaturaThread.join();
+            sanadorThread.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-       //los join son necesarios
-       //en que afecta no poner join es estos casos
-       //cuando es necesario
-        System.out.println("Termina main");
+        System.out.println("Termina main con energia: " + energia.ontenerEnergia());
 
     }
 
