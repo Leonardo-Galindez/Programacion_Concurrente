@@ -21,12 +21,12 @@ public class Energia {
     public int ontenerEnergia() {
         return this.valor;
     }
-    
-    public  void modificarEnergia(int modificacion) {
+
+    public synchronized void modificarEnergia(int modificacion) {
         this.valor = this.valor + modificacion;
     }
 
-    public  void setEnergia(int nuevaEnergia) {
+    public synchronized void setEnergia(int nuevaEnergia) {
         this.valor = nuevaEnergia;
     }
 }
