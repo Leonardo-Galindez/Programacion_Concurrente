@@ -15,6 +15,7 @@ public class Auto {
     private int km;
     private String marca;
     private int litrosCombustible;
+    private Surtidor surtidor;
 
     public Auto(String matricula, String modelo, int km, String marca) {
         this.matricula = matricula;
