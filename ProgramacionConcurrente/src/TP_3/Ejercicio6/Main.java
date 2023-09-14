@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         int[] arr = new int[50000];
         Random random = new Random();
-        int num;
+        int num;    
         
         for (int i = 0; i < arr.length; ++i) {
             num = random.nextInt(10) + 1;

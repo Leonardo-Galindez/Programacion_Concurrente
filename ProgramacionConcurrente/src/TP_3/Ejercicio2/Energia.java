@@ -18,7 +18,7 @@ public class Energia {
 
     //Exclusion mutua
     //lock de sincrinizado
-    public int ontenerEnergia() {
+    public synchronized int ontenerEnergia() {
         return this.valor;
     }
 
