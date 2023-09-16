@@ -19,8 +19,8 @@ public class Visitante implements Runnable {
     }
 
     public void reservarArea(boolean estado) {
-        if (!this.area.getEstado()) {
-            area.modificarEstado(estado);
+        if (this.area.getEspacios() != 0) {
+            area.modificarEspacios();
             System.out.println("El area se reservo con exito");
         } else {
             System.out.println("El area no esta disponible");

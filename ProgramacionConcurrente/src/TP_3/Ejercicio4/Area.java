@@ -11,17 +11,19 @@ package TP_3.Ejercicio4;
 //Recurso compartido
 public class Area {
 
-    private boolean estado;
+    private int espacios;
 
-    public Area() {
-        this.estado = false;
+    public Area(int espacios) {
+        this.espacios = espacios;
     }
 
-    public synchronized void modificarEstado(boolean estado) {
-        this.estado = estado;
+    public synchronized void modificarEspacios() {
+        if (this.espacios != 0) {
+            this.espacios = this.espacios - 1;
+        }
     }
-    
-    public boolean getEstado(){
-        return this.estado;
+
+    public synchronized int getEspacios() {
+        return this.espacios;
     }
 }

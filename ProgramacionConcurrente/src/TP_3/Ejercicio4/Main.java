@@ -12,7 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Area area = new Area();
+        Area area = new Area(3);
+        
         Visitante visitante1 = new Visitante("Leonardo", area);
         Visitante visitante2 = new Visitante("David", area);
         Visitante visitante3 = new Visitante("Fernando", area);

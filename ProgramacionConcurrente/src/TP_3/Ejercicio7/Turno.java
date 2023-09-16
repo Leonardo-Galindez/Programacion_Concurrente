@@ -4,6 +4,8 @@
  */
 package TP_3.Ejercicio7;
 
+import java.util.HashMap;
+
 /**
  *
  * @author galin
@@ -12,6 +14,7 @@ public class Turno {
 //agregar diccionario
 
     private char letra;
+    private HashMap hash;
 
     public Turno(char letra) {
         this.letra = letra;

@@ -42,7 +42,6 @@ public class Letra implements Runnable {
                 for (int i = 0; i < this.repeticiones; i++) {
                     System.out.println(this.letra);
                 }
-
                 switch (this.letra) {
                     case 'A':
                         this.turno.setTurno('B');
