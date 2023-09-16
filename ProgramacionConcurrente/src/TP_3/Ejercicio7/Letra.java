@@ -34,7 +34,29 @@ public class Letra implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(letra);
+        while (true) {
+            //consutlar 
+            System.out.println(Thread.currentThread().getName());
+            if (this.turno.getTurno() == letra) {
+
+                for (int i = 0; i < this.repeticiones; i++) {
+                    System.out.println(this.letra);
+                }
+
+                switch (this.letra) {
+                    case 'A':
+                        this.turno.setTurno('B');
+                        break;
+                    case 'B':
+                        this.turno.setTurno('C');
+                        break;
+                    case 'C':
+                        this.turno.setTurno('A');
+                        break;
+                }
+            }
+        }
+
     }
 
 }

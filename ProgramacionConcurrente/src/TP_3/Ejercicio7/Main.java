@@ -11,8 +11,8 @@ package TP_3.Ejercicio7;
 public class Main {
 
     public static void main(String[] args) {
-
-        Turno turno = new Turno();
+        //Recurso compartido
+        Turno turno = new Turno('A');
 
         Letra a = new Letra('A', 1, turno);
         Letra b = new Letra('B', 2, turno);
@@ -21,8 +21,6 @@ public class Main {
         Thread hiloA = new Thread(a);
         Thread hiloB = new Thread(b);
         Thread hiloC = new Thread(c);
-
-        Impresora unaImpresora = new Impresora();
 
         hiloA.start();
         hiloB.start();

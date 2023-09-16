@@ -10,18 +10,18 @@ package TP_3.Ejercicio7;
  */
 public class Turno {
 //agregar diccionario
-    private int turno;
+
     private char letra;
 
-    public Turno() {
-        this.turno = 1;
+    public Turno(char letra) {
+        this.letra = letra;
     }
 
-    public synchronized int getTurno() {
-        return turno;
+    public int getTurno() {
+        return letra;
     }
 
-    public synchronized void setTurno(int turno) {
-        this.turno = turno;
+    public void setTurno(char letra) {
+        this.letra = letra;
     }
 }
