@@ -34,8 +34,9 @@ public class SumaParcial implements Runnable {
     public void run() {
         //Sumamos los elementos del arreglo
         for (int i = inicio; i < fin; i++) {
-            this.setResultado(this.arreglo.getArreglo()[i]);
+            this.resultado = this.resultado + this.arreglo.getArreglo()[i];
         }
+        System.out.println("Suma parcial:" + this.resultado);
     }
 
 }

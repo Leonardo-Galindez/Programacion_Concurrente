@@ -13,7 +13,7 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        int[] arr = new int[50000];
+        int[] arr = new int[10];
         Random random = new Random();
         int num;
         int sumaTotal = 0;
@@ -47,8 +47,19 @@ public class Main {
         Thread threadSuma9 = new Thread(suma9);
         Thread threadSuma10 = new Thread(suma10);
 
+        threadSuma1.start();
+        threadSuma2.start();
+        threadSuma3.start();
+        threadSuma4.start();
+        threadSuma5.start();
+        threadSuma6.start();
+        threadSuma7.start();
+        threadSuma8.start();
+        threadSuma9.start();
+        threadSuma10.start();
+
         sumaTotal = suma1.getResultado() + suma2.getResultado() + suma3.getResultado() + suma4.getResultado() + suma5.getResultado() + suma6.getResultado() + suma7.getResultado() + suma8.getResultado() + suma9.getResultado() + suma10.getResultado();
-        System.out.println("El resultado es:" + sumaTotal);
+
         try {
             threadSuma1.join();
             threadSuma2.join();
@@ -63,6 +74,8 @@ public class Main {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+
+        
 
     }
 
