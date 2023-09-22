@@ -4,6 +4,9 @@
  */
 package EjercicioBarberoDurmiendo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author galin
@@ -18,14 +21,15 @@ public class Peluquero implements Runnable {
 
     public void run() {
         while (true) {
-            laSilla.esperarProximoCliente();
             try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            laSilla.finalizarCorte();
-        }
+                laSilla.esperarProximoCliente();
 
+                Thread.sleep(100);
+
+                laSilla.finalizarCorte();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Peluquero.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

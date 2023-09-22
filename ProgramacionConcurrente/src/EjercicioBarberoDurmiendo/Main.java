@@ -17,7 +17,7 @@ public class Main {
 
         Peluquero peluquero = new Peluquero(unaSilla);
 
-        Thread[] clientes = new Thread[1];
+        Thread[] clientes = new Thread[10];
 
         for (int i = 0; i < clientes.length; i++) {
             clientes[i] = new Thread(new Cliente(unaSilla), "Cliente:" + i);

@@ -26,13 +26,11 @@ public class Silla {
         this.silla.acquire();
     }
 
-    public void tomarSilla() {
-        try {
-            this.silla.acquire();
-            System.out.println("Silla Solicitado por:" + Thread.currentThread().getName());
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+    public void tomarSilla() throws InterruptedException {
+
+        this.silla.acquire();
+        System.out.println("Silla Solicitado por:" + Thread.currentThread().getName());
+
     }
 
     public void solicitarAtencion() {
@@ -41,9 +39,9 @@ public class Silla {
     }
 
     public void iniciarCorte() throws InterruptedException {
-       
+
         this.corte.acquire();
-        
+
     }
 
     public void finalizarCorte() {
@@ -52,12 +50,10 @@ public class Silla {
         this.salida.release();
     }
 
-    public void esperarAtencion() {
-        try {
-            this.salida.acquire();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+    public void esperarAtencion() throws InterruptedException {
+
+        this.salida.acquire();
+
     }
 
     public void liberarSilla() {
@@ -65,12 +61,10 @@ public class Silla {
         System.out.println("Silla libre");
     }
 
-    public void esperarProximoCliente() {
-        try {
-            this.corte.acquire();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+    public void esperarProximoCliente() throws InterruptedException {
+
+        this.corte.acquire();
+
     }
 
 }

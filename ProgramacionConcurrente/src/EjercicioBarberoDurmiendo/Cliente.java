@@ -4,6 +4,9 @@
  */
 package EjercicioBarberoDurmiendo;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author galin
@@ -21,7 +24,11 @@ public class Cliente implements Runnable {
     public void run() {
         //laSilla.verificarSillon();
         laSilla.solicitarAtencion();
-        laSilla.esperarAtencion();
+        try {
+            laSilla.esperarAtencion();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
         laSilla.liberarSilla();
     }
 }
