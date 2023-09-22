@@ -28,6 +28,7 @@ public class P3 implements Runnable {
 
     @Override
     public void run() {
+        
         this.mensaje.toString(this.nombre);
     }
 

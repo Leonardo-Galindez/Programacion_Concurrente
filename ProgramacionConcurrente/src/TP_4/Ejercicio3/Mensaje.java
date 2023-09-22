@@ -29,6 +29,9 @@ public class Mensaje {
     }
 
     public void toString(String proceso) {
+        //utilizamos try para que no se produsca problema de bucle
+        //y finally para que siempre libere el semaforo
+        //consultar si esta bien aplicado el finally
         try {
             semaforo.acquire();
             System.out.println(this.mensaje + " " + proceso);

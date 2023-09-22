@@ -10,33 +10,26 @@ package TP_3.Ejercicio6;
  */
 public class SumaParcial implements Runnable {
 
-    private int resultado;
-    private Arreglo arreglo;
+    private SumaTotal sumaTotal;
+    private int[] arreglo;
     private int inicio;
     private int fin;
 
-    public SumaParcial(Arreglo arreglo, int inicio, int fin) {
-        this.resultado = 0;
+    public SumaParcial(int[] arreglo, int inicio, int fin, SumaTotal sumaTotal) {
+        this.sumaTotal = sumaTotal;
         this.arreglo = arreglo;
         this.inicio = inicio;
         this.fin = fin;
     }
 
-    public int getResultado() {
-        return resultado;
-    }
-
-    public void setResultado(int num) {
-        this.resultado = this.resultado + num;
-    }
-
     @Override
     public void run() {
         //Sumamos los elementos del arreglo
+        System.out.println();
         for (int i = inicio; i < fin; i++) {
-            this.resultado = this.resultado + this.arreglo.getArreglo()[i];
+            this.sumaTotal.sumar(this.arreglo[i]);
         }
-        System.out.println("Suma parcial:" + this.resultado);
+        System.out.println("Suma parcial:" + this.sumaTotal.getSumaTotal());
     }
 
 }

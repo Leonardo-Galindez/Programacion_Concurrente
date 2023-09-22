@@ -12,11 +12,13 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Auto auto1 = new Auto(30, "111", "2019", 100, "Renault");
-        Auto auto2 = new Auto(10, "222", "2019", 200, "Renault");
-        Auto auto3 = new Auto(80, "333", "2019", 300, "Renault");
-        Auto auto4 = new Auto(100, "444", "2019", 400, "Renault");
-        Auto auto5 = new Auto(50, "555", "2019", 500, "Renault");
+        Surtidor unSurtidor = new Surtidor(1000);
+
+        Auto auto1 = new Auto(12, "111", "2019", 10, "Renault", unSurtidor);
+        Auto auto2 = new Auto(34, "222", "2019", 20, "Renault", unSurtidor);
+        Auto auto3 = new Auto(10, "333", "2019", 5, "Renault", unSurtidor);
+        Auto auto4 = new Auto(15, "444", "2019", 4, "Renault", unSurtidor);
+        Auto auto5 = new Auto(11, "555", "2019", 5, "Renault", unSurtidor);
 
         Thread threadAuto1 = new Thread(auto1);
         Thread threadAuto2 = new Thread(auto2);

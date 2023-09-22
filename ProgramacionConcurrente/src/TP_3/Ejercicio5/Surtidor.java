@@ -20,13 +20,15 @@ public class Surtidor {
         return capacidad;
     }
 
-    public synchronized void modificarCapacidad(int litros) {
-        if (this.capacidad > litros) {
+    public synchronized boolean modificarCapacidad(int litros) {
+        boolean tieneDispinible = this.capacidad > litros;
+        if (tieneDispinible) {
             this.capacidad = this.capacidad - litros;
+            System.out.println("se resto litros de surtidor");
         } else {
             System.out.println("El surtidor no tiene combustible");
         }
-
+        return tieneDispinible;
     }
 
 }

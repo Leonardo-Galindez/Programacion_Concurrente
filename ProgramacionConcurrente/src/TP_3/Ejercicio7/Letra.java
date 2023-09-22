@@ -36,7 +36,6 @@ public class Letra implements Runnable {
     public void run() {
         while (true) {
             //consutlar 
-            System.out.println(Thread.currentThread().getName());
             if (this.turno.getTurno() == letra) {
 
                 for (int i = 0; i < this.repeticiones; i++) {
@@ -52,6 +51,12 @@ public class Letra implements Runnable {
                     case 'C':
                         this.turno.setTurno('A');
                         break;
+                }
+            } else {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
             }
         }

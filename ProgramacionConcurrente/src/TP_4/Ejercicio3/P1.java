@@ -14,7 +14,7 @@ public class P1 implements Runnable {
 
     private String nombre;
     private Mensaje mensaje;
-    private Semaphore sem1;
+    
     //consultar si los semaforo van en los procesos o solo en el recurso compartido
 
     public P1(Mensaje mensaje) {

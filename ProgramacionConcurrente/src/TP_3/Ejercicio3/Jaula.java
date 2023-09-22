@@ -20,34 +20,42 @@ public class Jaula {
         this.rueda = rueda;
     }
 
-    public synchronized void comerComida() {
-        System.out.println("El " + Thread.currentThread().getName() + " esta comiendo");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void comerComida() {
+        synchronized (platoComida) {
+            System.out.println("El " + Thread.currentThread().getName() + " esta comiendo");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("El " + Thread.currentThread().getName() + " termino de comer");
         }
-        System.out.println("El " + Thread.currentThread().getName() + " termino de comer");
+
     }
 
-    public synchronized void usarHamaca() {
-        System.out.println("El " + Thread.currentThread().getName() + " esta usando la hamaca");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void usarHamaca() {
+        synchronized (hamaca) {
+            System.out.println("El " + Thread.currentThread().getName() + " esta usando la hamaca");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("El " + Thread.currentThread().getName() + " termino de usar la hamaca");
         }
-        System.out.println("El " + Thread.currentThread().getName() + " termino de usar la hamaca");
     }
 
-    public synchronized void usarRueda() {
-        System.out.println("El " + Thread.currentThread().getName() + " esta usando la rueda");
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    public void usarRueda() {
+        synchronized (rueda) {
+            System.out.println("El " + Thread.currentThread().getName() + " esta usando la rueda");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("El " + Thread.currentThread().getName() + " termino de usar la rueda");
         }
-        System.out.println("El " + Thread.currentThread().getName() + " termino de usar la rueda");
+
     }
 
 }

@@ -13,11 +13,10 @@ import java.util.Random;
 public class Main {
 
     public static void main(String[] args) {
-        int[] arr = new int[10];
+        SumaTotal sumaTotal = new SumaTotal();
+        int[] arr = new int[50000];
         Random random = new Random();
         int num;
-        int sumaTotal = 0;
-        Arreglo arreglo = new Arreglo(arr);
 
         for (int i = 0; i < arr.length; ++i) {
             num = random.nextInt(10) + 1;
@@ -25,16 +24,16 @@ public class Main {
         }
         int cantidadSub = arr.length / 10;
 
-        SumaParcial suma1 = new SumaParcial(arreglo, 0, cantidadSub);
-        SumaParcial suma2 = new SumaParcial(arreglo, cantidadSub, cantidadSub * 2);
-        SumaParcial suma3 = new SumaParcial(arreglo, cantidadSub * 2, cantidadSub * 3);
-        SumaParcial suma4 = new SumaParcial(arreglo, cantidadSub * 3, cantidadSub * 4);
-        SumaParcial suma5 = new SumaParcial(arreglo, cantidadSub * 4, cantidadSub * 5);
-        SumaParcial suma6 = new SumaParcial(arreglo, cantidadSub * 5, cantidadSub * 6);
-        SumaParcial suma7 = new SumaParcial(arreglo, cantidadSub * 6, cantidadSub * 7);
-        SumaParcial suma8 = new SumaParcial(arreglo, cantidadSub * 7, cantidadSub * 8);
-        SumaParcial suma9 = new SumaParcial(arreglo, cantidadSub * 8, cantidadSub * 9);
-        SumaParcial suma10 = new SumaParcial(arreglo, cantidadSub * 9, cantidadSub * 10);
+        SumaParcial suma1 = new SumaParcial(arr, 0, cantidadSub, sumaTotal);
+        SumaParcial suma2 = new SumaParcial(arr, cantidadSub, cantidadSub * 2, sumaTotal);
+        SumaParcial suma3 = new SumaParcial(arr, cantidadSub * 2, cantidadSub * 3, sumaTotal);
+        SumaParcial suma4 = new SumaParcial(arr, cantidadSub * 3, cantidadSub * 4, sumaTotal);
+        SumaParcial suma5 = new SumaParcial(arr, cantidadSub * 4, cantidadSub * 5, sumaTotal);
+        SumaParcial suma6 = new SumaParcial(arr, cantidadSub * 5, cantidadSub * 6, sumaTotal);
+        SumaParcial suma7 = new SumaParcial(arr, cantidadSub * 6, cantidadSub * 7, sumaTotal);
+        SumaParcial suma8 = new SumaParcial(arr, cantidadSub * 7, cantidadSub * 8, sumaTotal);
+        SumaParcial suma9 = new SumaParcial(arr, cantidadSub * 8, cantidadSub * 9, sumaTotal);
+        SumaParcial suma10 = new SumaParcial(arr, cantidadSub * 9, cantidadSub * 10, sumaTotal);
 
         Thread threadSuma1 = new Thread(suma1);
         Thread threadSuma2 = new Thread(suma2);
@@ -58,8 +57,6 @@ public class Main {
         threadSuma9.start();
         threadSuma10.start();
 
-        sumaTotal = suma1.getResultado() + suma2.getResultado() + suma3.getResultado() + suma4.getResultado() + suma5.getResultado() + suma6.getResultado() + suma7.getResultado() + suma8.getResultado() + suma9.getResultado() + suma10.getResultado();
-
         try {
             threadSuma1.join();
             threadSuma2.join();
@@ -75,8 +72,7 @@ public class Main {
             ex.printStackTrace();
         }
 
-        
-
+        System.out.println("La suma total es:" + sumaTotal.getSumaTotal());
     }
 
 }
