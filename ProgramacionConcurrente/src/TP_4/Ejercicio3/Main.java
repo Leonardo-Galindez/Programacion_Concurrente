@@ -14,19 +14,17 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Mensaje unMensaje = new Mensaje();
+        Semaphore semP1 = new Semaphore(1);
+        Semaphore semP2 = new Semaphore(0);
+        Semaphore semP3 = new Semaphore(0);
 
-        P1 p1 = new P1(unMensaje);
-        P2 p2 = new P2(unMensaje);
-        P3 p3 = new P3(unMensaje);
+        Thread p1 = new Thread(new Proceso(semP1, semP3, "P1"));
+        Thread p2 = new Thread(new Proceso(semP3, semP2, "P3"));
+        Thread p3 = new Thread(new Proceso(semP2, semP1, "P2"));
 
-        Thread threadP1 = new Thread(p1);
-        Thread threadP2 = new Thread(p2);
-        Thread threadP3 = new Thread(p3);
-
-        threadP1.start();
-        threadP2.start();
-        threadP3.start();
+        p1.start();
+        p2.start();
+        p3.start();
 
     }
 }
