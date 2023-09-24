@@ -13,58 +13,56 @@ import java.util.concurrent.Semaphore;
 public class Silla {
 
     private Semaphore silla;
-    private Semaphore corte;
+    private Semaphore barbero;
     private Semaphore salida;
 
     public Silla() {
         this.silla = new Semaphore(1, true);
-        this.corte = new Semaphore(0);//para decir si el barbero esta durmiendo
-        this.salida = new Semaphore(0);//
+        this.barbero = new Semaphore(0);
+        this.salida = new Semaphore(0);
     }
 
-    public void verificarSillon() throws InterruptedException {
-        this.silla.acquire();
-    }
-
-    public void tomarSilla() throws InterruptedException {
-
-        this.silla.acquire();
-        System.out.println("Silla Solicitado por:" + Thread.currentThread().getName());
-
+    public void verificarSillon() {
+        try {
+            this.silla.acquire();
+            System.out.println(Thread.currentThread().getName() + " verifica la silla");
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void solicitarAtencion() {
-        this.corte.release();
-        System.out.println("Corte pedido");
-    }
-
-    public void iniciarCorte() throws InterruptedException {
-
-        this.corte.acquire();
-
+        this.barbero.release();
+        System.out.println(Thread.currentThread().getName() + " solicita un corte");
     }
 
     public void finalizarCorte() {
-        this.corte.release();
-        System.out.println("Terminamos corte");
+        this.barbero.release();
+        System.out.println(Thread.currentThread().getName() + "Terminamo de cortar");
         this.salida.release();
     }
 
-    public void esperarAtencion() throws InterruptedException {
-
-        this.salida.acquire();
-
+    public void esperarAtencion() {
+        try {
+            this.salida.acquire();
+            System.out.println(Thread.currentThread().getName() + " le estan cortando el pelo ....");
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void liberarSilla() {
         this.silla.release();
-        System.out.println("Silla libre");
+        System.out.println(Thread.currentThread().getName() + " libero la silla");
     }
 
-    public void esperarProximoCliente() throws InterruptedException {
-
-        this.corte.acquire();
-
+    public void esperarProximoCliente() {
+        try {
+            this.barbero.acquire();
+            System.out.println(Thread.currentThread().getName() + " espera al proximo cliente");
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

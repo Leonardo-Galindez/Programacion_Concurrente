@@ -14,21 +14,15 @@ import java.util.logging.Logger;
 public class Cliente implements Runnable {
 
     private Silla laSilla;
-    private String Nombre;
 
     public Cliente(Silla laSilla) {
         this.laSilla = laSilla;
-        this.Nombre = Nombre;
     }
 
     public void run() {
-        //laSilla.verificarSillon();
+        laSilla.verificarSillon();
         laSilla.solicitarAtencion();
-        try {
-            laSilla.esperarAtencion();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        laSilla.esperarAtencion();
         laSilla.liberarSilla();
     }
 }

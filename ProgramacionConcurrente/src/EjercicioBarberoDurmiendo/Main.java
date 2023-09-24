@@ -10,19 +10,20 @@ package EjercicioBarberoDurmiendo;
  */
 public class Main {
 //politica demaforo(1,true);para el orden de bloqueo
-    
+
     public static void main(String[] args) {
 
         Silla unaSilla = new Silla();
 
         Peluquero peluquero = new Peluquero(unaSilla);
 
-        Thread[] clientes = new Thread[10];
+        Thread[] clientes = new Thread[20];
 
         for (int i = 0; i < clientes.length; i++) {
             clientes[i] = new Thread(new Cliente(unaSilla), "Cliente:" + i);
         }
-
+        Thread barbero = new Thread(peluquero, "Peluquero");
+        barbero.start();
         for (int i = 0; i < clientes.length; i++) {
             clientes[i].start();
         }
