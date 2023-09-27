@@ -17,31 +17,33 @@ public class Taxi {
     Semaphore taxista = new Semaphore(0);//sirve para indicar si el taxista esta durmiendo
 
     //metodos para pasajero
+    public void solicitarTaxi() {
+        //despertamos al taxista
+        taxista.release();
+        System.out.println("El cliente despierta al taxista");
+    }
+
     public void tomarTaxi() throws InterruptedException {
         //el pasajero toma el taxi
         taxi.acquire();
+        System.out.println("El pasajero tomar el taxi");
     }
 
     public void liberarTaxi() throws InterruptedException {
         destino.acquire();
         taxi.release();//se libera taxi
-    }
-
-    public void solicitarTaxi() {
-        //despertamos al taxista
-        taxista.release();
+        System.out.println("El pasajero libera el taxi");
     }
 
     //metodos para taxista
     public void esperarProximoPasajero() throws InterruptedException {
         taxista.acquire();//el taxista espera al proximo pasajero
-    }
-
-    public void esperarProximoCliente() {
-        taxista.release();
+        System.out.println("El taxista taxista espera al proximo cliente");
     }
 
     public void avisarDeLlegadaADestino() {
         destino.release();
+        System.out.println("El le avisa al pasajero que se llego al destino");
     }
+
 }
