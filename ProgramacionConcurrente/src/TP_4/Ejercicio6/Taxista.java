@@ -11,7 +11,6 @@ package TP_4.Ejercicio6;
 public class Taxista implements Runnable {
     //lo que comparten es el taxi???
     
-    
     public void run() {
         
     }
