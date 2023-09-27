@@ -11,7 +11,8 @@ package TP_4.Ejercicio4;
 public class Cliente implements Runnable {
 
     private GestorImpresoras gestor;
-    private Impresora impresora;
+    //private Impresora impresora;
+    //cola de impresoras
 
     
     

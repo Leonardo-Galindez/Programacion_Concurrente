@@ -4,14 +4,13 @@
  */
 package TP_4.Ejercicio4;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  *
  * @author galin
  */
-public interface GestorImpresoras {
+public class GestorImpresoras {
 
+    public static void main(String[] args) {
+
+    }
 }

@@ -12,26 +12,28 @@ import java.util.concurrent.Semaphore;
  */
 public class Estado {
 
-    private boolean ocupada = false;
+    private boolean ocupada;
     private Semaphore estado;
 
     public Estado() {
+        this.ocupada = false;
         this.estado = new Semaphore(1);
     }
 
     public void verificarDisponibilidad() {
         if (!ocupada) {
-            
+
         }
     }
 
     public void utilizarImpresora() {
         //this.estado.acquire();
         System.out.println("Cliente " + Thread.currentThread().getName() + " Utilizando Impresora");
+        
     }
 
     public void liberarImpresora() {
-        this.estado.release();
+
         System.out.println("Cliente " + Thread.currentThread().getName() + " Libero la Impresora");
     }
 }
