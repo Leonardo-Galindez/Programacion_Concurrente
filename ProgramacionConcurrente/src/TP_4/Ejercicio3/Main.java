@@ -13,18 +13,16 @@ import java.util.concurrent.Semaphore;
 public class Main {
 
     public static void main(String[] args) {
+        Semaphore sem1 = new Semaphore(1);
+        Semaphore sem2 = new Semaphore(0);
+        Semaphore sem3 = new Semaphore(0);
 
-        Semaphore semP1 = new Semaphore(1);
-        Semaphore semP2 = new Semaphore(0);
-        Semaphore semP3 = new Semaphore(0);
+        Thread proceso1 = new Thread(new Proceso("P1", sem1, sem3));
+        Thread proceso2 = new Thread(new Proceso("P2", sem2, sem1));
+        Thread proceso3 = new Thread(new Proceso("P3", sem3, sem2));
 
-        Thread p1 = new Thread(new Proceso(semP1, semP3, "P1"));
-        Thread p2 = new Thread(new Proceso(semP3, semP2, "P3"));
-        Thread p3 = new Thread(new Proceso(semP2, semP1, "P2"));
-
-        p1.start();
-        p2.start();
-        p3.start();
-
+        proceso1.start();
+        proceso2.start();
+        proceso3.start();
     }
 }

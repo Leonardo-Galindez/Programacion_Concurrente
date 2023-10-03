@@ -20,17 +20,9 @@ public class Pasajero implements Runnable {
     }
 
     public void run() {
+        taxi.tomarTaxi();
         taxi.solicitarTaxi();
-        try {
-            taxi.tomarTaxi();
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-            taxi.liberarTaxi();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Pasajero.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        taxi.realizandoViaje();
+        taxi.liberarTaxi();
     }
 }

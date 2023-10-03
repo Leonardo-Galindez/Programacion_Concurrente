@@ -5,6 +5,8 @@
 package TP_4.Ejercicio6;
 
 import java.util.concurrent.Semaphore;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,33 +19,51 @@ public class Taxi {
     Semaphore taxista = new Semaphore(0);//sirve para indicar si el taxista esta durmiendo
 
     //metodos para pasajero
+    public void tomarTaxi() {
+        try {
+            //el pasajero toma el taxi , no lo puede adquirir si el taxista esta durmiendo
+            taxi.acquire();
+            System.out.println("El pasajero:" + Thread.currentThread().getName() + " toma el taxi");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Taxi.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void solicitarTaxi() {
         //despertamos al taxista
         taxista.release();
-        System.out.println("El cliente despierta al taxista");
+        System.out.println("El pasajero:" + Thread.currentThread().getName() + " despierta al taxista");
     }
 
-    public void tomarTaxi() throws InterruptedException {
-        //el pasajero toma el taxi
-        taxi.acquire();
-        System.out.println("El pasajero tomar el taxi");
+    public void realizandoViaje() {
+
+        System.out.println("El pasajero " + Thread.currentThread().getName() + " esta en viaje");
     }
 
-    public void liberarTaxi() throws InterruptedException {
-        destino.acquire();
+    public void liberarTaxi() {
+        destino.release();
         taxi.release();//se libera taxi
-        System.out.println("El pasajero libera el taxi");
+        System.out.println("El pasajero:" + Thread.currentThread().getName() + " libera el taxi");
     }
 
     //metodos para taxista
-    public void esperarProximoPasajero() throws InterruptedException {
-        taxista.acquire();//el taxista espera al proximo pasajero
-        System.out.println("El taxista taxista espera al proximo cliente");
+    public void esperarProximoPasajero() {
+        try {
+            taxista.acquire();//el taxista espera al proximo pasajero durmiendo
+            System.out.println("El taxista espera al proximo cliente durmiendo");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Taxi.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void avisarDeLlegadaADestino() {
-        destino.release();
-        System.out.println("El le avisa al pasajero que se llego al destino");
+    public void finalizarViaje() {
+        try {
+            destino.acquire();
+            taxista.acquire();
+            System.out.println("El taxista le avisa al pasajero que se llego al destino");
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Taxi.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

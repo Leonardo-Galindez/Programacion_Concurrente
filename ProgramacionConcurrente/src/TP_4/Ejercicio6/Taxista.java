@@ -21,23 +21,19 @@ public class Taxista implements Runnable {
     }
 
     public void run() {
-        try {
+        while (true) {
             taxi.esperarProximoPasajero();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Taxista.class.getName()).log(Level.SEVERE, null, ex);
+            taxi.finalizarViaje();
         }
-        realizandoViaje();
-        taxi.avisarDeLlegadaADestino();
     }
 
-    public void realizandoViaje() {
-        while (true) {
-            try {
-                Thread.sleep(1000);
-                System.out.println("En viaje.....");
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
+    public void viajando() {
+        try {
+            System.out.println("Viajando.....");
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
         }
     }
+
 }

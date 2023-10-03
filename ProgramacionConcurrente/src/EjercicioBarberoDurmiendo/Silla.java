@@ -23,7 +23,7 @@ public class Silla {
     }
 
     public void verificarSillon() {
-        try {
+        try { 
             this.silla.acquire();
             System.out.println(Thread.currentThread().getName() + " verifica la silla");
         } catch (InterruptedException ex) {

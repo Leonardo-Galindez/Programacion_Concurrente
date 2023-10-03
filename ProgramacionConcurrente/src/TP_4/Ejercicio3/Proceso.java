@@ -11,29 +11,31 @@ import java.util.concurrent.Semaphore;
  * @author galin
  */
 public class Proceso implements Runnable {
+    //consultar si hay otra forma de hacerlo
+    private String nombre;
+    private Semaphore semActual;
+    private Semaphore semSiguiente;
 
-    private final Semaphore semActual;
-    private final Semaphore semSiguiente;
-    private final String nombre;
-
-    public Proceso(Semaphore semActual, Semaphore semSiguiente, String nombre) {
+    public Proceso(String nombre, Semaphore semActual, Semaphore semSiguiente) {
+        this.nombre = nombre;
         this.semActual = semActual;
         this.semSiguiente = semSiguiente;
-        this.nombre = nombre;
     }
-
+    
     @Override
     public void run() {
-        try {
-            while (true) {
+        while (true) {
+            try {
                 semActual.acquire();
-                System.out.println(nombre + " ejecutando...");
-                // Simula el trabajo del proceso
+                // Realiza la lógica del proceso
+                System.out.println("Proceso " + nombre + " ejecutándose");
+                // Simulación de trabajo del proceso
                 Thread.sleep(1000);
+                System.out.println("Proceso " + nombre + " finalizado");
                 semSiguiente.release();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
         }
     }
 }

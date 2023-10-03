@@ -11,15 +11,14 @@ package TP_4.Ejercicio6;
 public class Main {
 
     public static void main(String[] args) {
-        Thread[] pasajeros = new Thread[10];
+        Thread[] pasajeros = new Thread[4];
         Taxi taxi = new Taxi();
 
         Thread hiloTaxista = new Thread(new Taxista(taxi));
-        hiloTaxista.start();
         for (int i = 0; i < pasajeros.length; i++) {
             pasajeros[i] = new Thread(new Pasajero(taxi));
         }
-
+        hiloTaxista.start();
         for (int i = 0; i < pasajeros.length; i++) {
             pasajeros[i].start();
         }
