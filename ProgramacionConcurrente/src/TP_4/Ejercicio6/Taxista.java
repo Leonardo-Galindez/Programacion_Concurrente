@@ -4,9 +4,6 @@
  */
 package TP_4.Ejercicio6;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author galin
@@ -23,6 +20,7 @@ public class Taxista implements Runnable {
     public void run() {
         while (true) {
             taxi.esperarProximoPasajero();
+            viajando();
             taxi.finalizarViaje();
         }
     }

@@ -4,9 +4,6 @@
  */
 package TP_4.Ejercicio6;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author galin
@@ -22,7 +19,6 @@ public class Pasajero implements Runnable {
     public void run() {
         taxi.tomarTaxi();
         taxi.solicitarTaxi();
-        taxi.realizandoViaje();
         taxi.liberarTaxi();
     }
 }

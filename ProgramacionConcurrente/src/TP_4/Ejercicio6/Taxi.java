@@ -31,19 +31,13 @@ public class Taxi {
 
     public void solicitarTaxi() {
         //despertamos al taxista
-        taxista.release();
         System.out.println("El pasajero:" + Thread.currentThread().getName() + " despierta al taxista");
-    }
-
-    public void realizandoViaje() {
-
-        System.out.println("El pasajero " + Thread.currentThread().getName() + " esta en viaje");
+        taxista.release();
     }
 
     public void liberarTaxi() {
-        destino.release();
-        taxi.release();//se libera taxi
         System.out.println("El pasajero:" + Thread.currentThread().getName() + " libera el taxi");
+        destino.release();
     }
 
     //metodos para taxista
@@ -59,11 +53,10 @@ public class Taxi {
     public void finalizarViaje() {
         try {
             destino.acquire();
-            taxista.acquire();
-            System.out.println("El taxista le avisa al pasajero que se llego al destino");
+            System.out.println("Llego a destino");
+            taxi.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Taxi.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
