@@ -12,22 +12,14 @@ public class Pasajero implements Runnable {
 
     @Override
     public void run() {
-        boolean subio = false;
-        int numAsiento = -1;
-        while (!subio) {
-            numAsiento = tren.subirTren();
-            if (numAsiento == -1) {
-                esperar();
-            } else {
-                subio = true;
-            }
-        }
-        tren.bajarTren(numAsiento);
+        tren.subirTren();
+        esperar();
+        tren.bajarTren();
     }
 
     public void esperar() {
         try {
-            System.out.println(Thread.currentThread().getName()+" esta espeRANDO");
+            System.out.println(Thread.currentThread().getName() + " esta esperando");
             Thread.sleep((new Random()).nextInt(1000) + 1000);
         } catch (InterruptedException e) {
             e.printStackTrace();

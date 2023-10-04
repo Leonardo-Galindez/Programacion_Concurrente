@@ -18,6 +18,7 @@ public class ControlTren implements Runnable {
 
     private void viaje() {
         try {
+            System.out.println("Viajando......");
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
