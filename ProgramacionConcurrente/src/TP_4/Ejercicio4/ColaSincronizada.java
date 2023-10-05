@@ -8,13 +8,8 @@ package TP_4.Ejercicio4;
  *
  * @author galin
  */
-public class Cliente implements Runnable {
-
-    private GestorImpresoras gestor;
-
-    //private Impresora impresora;
-    //cola de impresoras
-    public void run() {
-
-    }
+public class ColaSincronizada {
+    
+    
+    
 }

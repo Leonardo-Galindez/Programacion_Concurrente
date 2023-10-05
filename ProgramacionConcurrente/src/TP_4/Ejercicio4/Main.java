@@ -14,9 +14,7 @@ import java.util.Queue;
 public class Main {
 
     public static void main(String[] args) {
-        
-        Estado est = new Estado();
-        
+
         for (int i = 1; i < 11; i++) {
             //Thread threadImpresora = new Thread(new Cliente(est, i));
         }

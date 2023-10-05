@@ -1,6 +1,7 @@
 package ACTIVIDAD2;
 
 public class ControlTren implements Runnable {
+
     private Tren tren;
 
     public ControlTren(Tren tren) {

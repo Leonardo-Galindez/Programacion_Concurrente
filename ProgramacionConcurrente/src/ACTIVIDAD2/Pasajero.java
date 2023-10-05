@@ -13,7 +13,7 @@ public class Pasajero implements Runnable {
     @Override
     public void run() {
         tren.subirTren();
-        esperar();
+        
         tren.bajarTren();
     }
 

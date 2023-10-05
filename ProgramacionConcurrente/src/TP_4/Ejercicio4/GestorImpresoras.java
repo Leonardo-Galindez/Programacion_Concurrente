@@ -11,6 +11,11 @@ package TP_4.Ejercicio4;
 public class GestorImpresoras {
 
     public static void main(String[] args) {
+        
+        Impresora impre1 = new Impresora();
+        Impresora impre2 = new Impresora();
+        Impresora impre3 = new Impresora();
+        
 
     }
 }

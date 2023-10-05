@@ -2,19 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP_4.Ejercicio4;
+package TP_4.Ejercicio8;
 
 /**
  *
  * @author galin
  */
-public class Cliente implements Runnable {
+public class Mecanico {
 
-    private GestorImpresoras gestor;
-
-    //private Impresora impresora;
-    //cola de impresoras
-    public void run() {
-
-    }
+    private Producto producto;
+    
+    
 }

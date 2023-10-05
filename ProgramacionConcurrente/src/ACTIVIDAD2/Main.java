@@ -8,7 +8,7 @@ public class Main {
 
         Thread pasajeros[] = new Thread[10];
         Thread control = new Thread(new ControlTren(tren), " CONTROL ");
-        
+
         for (int i = 0; i < pasajeros.length; i++) {
             pasajeros[i] = new Thread(new Pasajero(tren), "Pasajero " + (i + 1));
         }
@@ -16,6 +16,5 @@ public class Main {
         for (int i = 0; i < pasajeros.length; i++) {
             pasajeros[i].start();
         }
-
     }
 }

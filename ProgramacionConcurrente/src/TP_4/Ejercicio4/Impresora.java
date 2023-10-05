@@ -14,13 +14,11 @@ import java.util.logging.Logger;
  */
 public class Impresora {
 
-    private int num;
-    private boolean ocupada;
+    private boolean disponible;
     private Semaphore estado;
 
-    public Impresora(int num) {
-        this.ocupada = false;
-        this.num = num;
+    public Impresora() {
+        this.disponible = true;
         this.estado = new Semaphore(1);
     }
 
@@ -45,8 +43,8 @@ boolean imprimir()
 
         try {
             this.estado.acquire();
-            if (!this.ocupada) {
-                this.ocupada = true;
+            if (!this.disponible) {
+                this.disponible = true;
                 imprime();
                 imprimiendo();
                 liberarImpresora();
@@ -54,14 +52,15 @@ boolean imprimir()
         } catch (InterruptedException ex) {
             Logger.getLogger(Impresora.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return this.ocupada;
+        return this.disponible;
     }
 
-    public void utilizarImpresora(){
-        
+    public void utilizarImpresora() {
+
     }
+
     public void liberarImpresora() {
-        this.ocupada = false;
+        this.disponible = false;
         this.estado.release();
     }
 
@@ -77,10 +76,4 @@ boolean imprimir()
         System.out.print("Impresora " + Thread.currentThread().getName().toString());
         System.out.println(" Imprimiendo....");
     }
-
-    @Override
-    public String toString() {
-        return "" + this.num;
-    }
-
 }
