@@ -7,10 +7,10 @@ public class Tren {
     private int cantAsientos;
     private int ocupados;
 
-    private Semaphore semAsiento;//se encarga de decir si el tren esta llego o no
+    private Semaphore semAsiento;// se encarga de decir si el tren esta llego o no
     private Semaphore semViajar; // Tren viaja cuando ya se lleno
-    private Semaphore subirTren; //sirve para permitir que cada pasajero suba al tren //prodria no ir????
-    private Semaphore semBajar; //para saber si se puede bajar
+    private Semaphore subirTren; // sirve para permitir que cada pasajero suba al tren //prodria no ir????
+    private Semaphore semBajar; // para saber si se puede bajar
 
     public Tren(int cantAsientos) {
         this.semAsiento = new Semaphore(1);
@@ -21,22 +21,23 @@ public class Tren {
         this.ocupados = 0;
     }
 
-    //------Pasajero-----------
+    // ------Pasajero-----------
     public void subirTren() {
         try {
             subirTren.acquire();
-            if (cantAsientos > ocupados) {//llenamos los asientos
-                //subirTren esta para que entren de a uno al tren
+            if (cantAsientos > ocupados) {// llenamos los asientos
+                // subirTren esta para que entren de a uno al tren
                 System.out.println(Thread.currentThread().getName() + " subio al tren");
                 ocupados++;
                 if (cantAsientos == ocupados) {
-                    semViajar.release();//liberamos el tren para viajar
+                    semViajar.release();// liberamos el tren para viajar
                 } else {
                     subirTren.release();
                 }
             } else {
                 System.out.println(" TREN LLENO");
-                //si se llenan los asientos adquirimos el semaforo para decir que no pueden entrar mas 
+                // si se llenan los asientos adquirimos el semaforo para decir que no pueden
+                // entrar mas
             }
 
         } catch (InterruptedException e) {
@@ -54,7 +55,7 @@ public class Tren {
                     System.out.println(" TREN VACIO");
                     subirTren.release();
                 } else {
-                    semBajar.release();//el ultimo que baja libera semBajar
+                    semBajar.release();// el ultimo que baja libera semBajar
                 }
             }
 
@@ -76,7 +77,7 @@ public class Tren {
         }
     }
 
-    //Al finalizar el viaje permite que se puedan bajar los pasajeros
+    // Al finalizar el viaje permite que se puedan bajar los pasajeros
     public void finalizarViaje() {
         System.out.println(Thread.currentThread().getName() + " SE PUEDEN BAJAR LOR PASAJEROS");
         semBajar.release();
