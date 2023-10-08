@@ -8,6 +8,18 @@ package TP_4.Ejercicio7;
  *
  * @author galin
  */
-public class Mozo {
-    
+public class Mozo implements Runnable {
+
+    private Silla silla;
+
+    public Mozo(Silla silla) {
+        this.silla = silla;
+    }
+
+    public void run() {
+        while (true) {
+            silla.servirEmpleado();
+            silla.esperaProximoEmpleado();
+        }
+    }
 }
