@@ -93,6 +93,7 @@ public class Silla {
             //El mozo espera al proximo empleado disfrutar hobbie
             mozo.acquire();
             System.out.println("El mozo inventanda nuevas versiones de pollo");
+            
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }

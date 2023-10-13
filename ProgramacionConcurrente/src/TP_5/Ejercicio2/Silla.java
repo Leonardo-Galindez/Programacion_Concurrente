@@ -14,22 +14,22 @@ import java.util.logging.Logger;
  */
 public class Silla {
 
-    private Semaphore silla;
     private Semaphore mozo;
     private Semaphore cocinero;
+    private Semaphore silla;
     private Semaphore comer;
     private Semaphore tomar;
     private Semaphore mutexMozo;
     private Semaphore mutexCocinero;
 
     public Silla() {
-        this.silla = new Semaphore(2);
-        this.mozo = new Semaphore(0);
-        this.comer = new Semaphore(0);
-        this.cocinero = new Semaphore(0);
-        this.tomar = new Semaphore(0);
+        this.silla = new Semaphore(2);//sirve para saber si se llenaron los lugares
+        this.mozo = new Semaphore(0);//sirve para indicar que esta esperando al proximo cliente
+        this.comer = new Semaphore(0);//sirve para idicar que el empleado puede comer
+        this.cocinero = new Semaphore(0);//sirve para indicar que esta esperando al proximo cliente
+        this.tomar = new Semaphore(0);//sirve para indicar que el empleado puede tomar
         this.mutexMozo = new Semaphore(1);//sirve para que el mozo no atienda a los 2 clientes a la vez
-        this.mutexCocinero = new Semaphore(1);
+        this.mutexCocinero = new Semaphore(1);//sirve para que el cocinero no atienda a los 2 clientes a la vez
     }
 
     //Metodos empleado
@@ -45,9 +45,10 @@ public class Silla {
     public void solicitarAtencionMozo() {
         try {
             //El adquiere al la atencion del mozo por ese cliente
-            mozo.release();
+
             mutexMozo.acquire();
             System.out.println("El empleado " + Thread.currentThread().getName() + " solicita atencion del mozo");
+            mozo.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -58,7 +59,7 @@ public class Silla {
             //El empleado libera al cocinero
             mutexCocinero.acquire();
             System.out.println("El empleado " + Thread.currentThread().getName() + " solicita atencion del cocinero");
-            mozo.release();
+            cocinero.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,14 +68,15 @@ public class Silla {
     public void liberarMozo() {
         System.out.println("El empleado " + Thread.currentThread().getName() + " libero la silla");
         silla.release();
+        mutexMozo.release();
         mozo.release();
     }
 
     public void liberarCocinero() {
         System.out.println("El empleado " + Thread.currentThread().getName() + " libero la silla");
         silla.release();
-        cocinero.release();
         mutexCocinero.release();
+        cocinero.release();
     }
 
     public void comer() {
@@ -104,31 +106,30 @@ public class Silla {
             mozo.acquire();
             System.out.println("El empleado puede tomar ");
             tomar.release();
-            mutexMozo.release();
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void esperaProximoEmpleadoMozo() {
         try {
-            //El mozo espera al proximo empleado disfrutar hobbie
             mozo.acquire();
             System.out.println("El mozo inventanda nuevas versiones de pollo");
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     //Metodos cocinero
     public void cocinarEmpleado() {
+
         try {
-            //El mozo le sirve al empleado y libera para que pueda comer
+            //El cocinero le sirve al empleado y libera para que pueda comer
             cocinero.acquire();
             System.out.println("El empleado puede comer ");
             comer.release();
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -137,8 +138,10 @@ public class Silla {
             //El mozo espera al proximo empleado disfrutar hobbie
             cocinero.acquire();
             System.out.println("El mozo inventanda nuevas versiones de pollo");
+            cocinero.release();
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }

@@ -21,12 +21,12 @@ public class Main {
         for (int i = 0; i < hilosEmpleados.length; i++) {
             hilosEmpleados[i] = new Thread(new Empleado(silla));
         }
-        
-        hiloCocineto.start();
-        hiloMozo.start();
-        
+
         for (int i = 0; i < hilosEmpleados.length; i++) {
             hilosEmpleados[i].start();
         }
+
+        hiloCocineto.start();
+        hiloMozo.start();
     }
 }

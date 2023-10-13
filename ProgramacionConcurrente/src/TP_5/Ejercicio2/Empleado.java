@@ -20,33 +20,46 @@ public class Empleado implements Runnable {
 
     public void run() {
         int rta;
-        while (true) {
-            rta = (new Random()).nextInt(3) + 1;
-            switch (1) {
-                case 1:
-                    //tomar
-                    silla.tomarSilla();
-                    silla.solicitarAtencionMozo();
-                    silla.tomar();
-                    break;
-                case 2:
-                    //comer
-                    silla.tomarSilla();
-                    silla.solicitarAtencionCocinero();
-                    silla.comer();
-                    break;
-                case 3:
-                    //comer y tomar
-                    silla.tomarSilla();
-                    silla.solicitarAtencionMozo();
-                    silla.tomar();
-                    silla.solicitarAtencionCocinero();
-                    silla.comer();
-                    silla.liberarMozo();
-                    silla.liberarCocinero();
-                    break;
-            }
+
+        rta = (new Random()).nextInt(3) + 1;
+        switch (rta) {
+            case 1:
+                //tomar
+                silla.tomarSilla();
+                silla.solicitarAtencionMozo();
+                silla.tomar();
+                simulacion();
+                silla.liberarMozo();
+                break;
+            case 2:
+                //comer
+                silla.tomarSilla();
+                silla.solicitarAtencionCocinero();
+                silla.comer();
+                simulacion();
+                silla.liberarCocinero();
+                break;
+            case 3:
+                //comer y tomar
+                silla.tomarSilla();
+                silla.solicitarAtencionMozo();
+                silla.tomar();
+                simulacion();
+                silla.solicitarAtencionCocinero();
+                silla.comer();
+                simulacion();
+                silla.liberarMozo();
+                silla.liberarCocinero();
+                break;
         }
     }
 
+    public void simulacion() {
+        try {
+            Thread.sleep((new Random()).nextInt(1000) + 1000);
+            System.out.println("Simulando....");
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

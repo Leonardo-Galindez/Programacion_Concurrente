@@ -21,7 +21,6 @@ public class Cocinero implements Runnable {
     public void run() {
         while (true) {
             silla.cocinarEmpleado();
-            cocinando();
             silla.esperaProximoEmpleadoCocinero();
         }
     }
