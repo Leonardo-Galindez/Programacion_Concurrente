@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
         Piscina piscina = new Piscina();
-        Thread personas[] = new Thread[10];
+        Thread personas[] = new Thread[20];
         for (int i = 0; i < personas.length; i++) {
             personas[i] = new Thread(new Persona(piscina));
         }

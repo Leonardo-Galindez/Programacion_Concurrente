@@ -36,11 +36,4 @@ public class Piscina {
         capacidad.release();
     }
 
-    public void bañando() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-    }
 }

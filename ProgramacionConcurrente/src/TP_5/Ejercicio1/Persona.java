@@ -19,7 +19,16 @@ public class Persona implements Runnable {
     public void run() {
 
         piscina.ingresarPiscina();
+        bañando();
         piscina.salirPiscina();
 
+    }
+    
+    public void bañando() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
