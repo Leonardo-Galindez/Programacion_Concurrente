@@ -137,7 +137,7 @@ public class Silla {
         try {
             //El mozo espera al proximo empleado disfrutar hobbie
             cocinero.acquire();
-            System.out.println("El mozo inventanda nuevas versiones de pollo");
+            System.out.println("El cocinero ordena la cocina y probar nuevas recetas");
             cocinero.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Silla.class.getName()).log(Level.SEVERE, null, ex);

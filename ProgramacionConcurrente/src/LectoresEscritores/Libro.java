@@ -15,16 +15,18 @@ import java.util.logging.Logger;
 public class Libro {
 
     private Semaphore escritor;
-    private Semaphore lectores;
+    private Semaphore lector;
+    private int cont;//contador para saber cuantos 
 
     public Libro() {
         this.escritor = new Semaphore(1);
-        this.lectores = new Semaphore(1);
+        this.lector = new Semaphore(4);
+
     }
 
     public void leer() {
         try {//como se cuanto lectores estan leyendo para que el escritor pueda leer
-            lectores.acquire();
+            lector.acquire();
             System.out.println("El lector" + Thread.currentThread().getName() + " esta leyendo");
         } catch (InterruptedException ex) {
             Logger.getLogger(Libro.class.getName()).log(Level.SEVERE, null, ex);
@@ -33,12 +35,13 @@ public class Libro {
 
     public void finalizarLeer() {
         System.out.println("El lector" + Thread.currentThread().getName() + " termino de leer");
-        lectores.release();
+        lector.release();
     }
 
     public void escribir() {
         try {
             escritor.acquire();
+            lector.acquire(4);//para que ningun lector pueda acceder al libro
             //lectores.acquire();
             System.out.println("El escritor" + Thread.currentThread().getName() + " esta escribiendo");
         } catch (InterruptedException ex) {
@@ -49,6 +52,6 @@ public class Libro {
     public void finalizarEscribir() {
         System.out.println("El escritor" + Thread.currentThread().getName() + " termino de escribir");
         escritor.release();
-        lectores.release(10);
+        lector.release(4);
     }
 }

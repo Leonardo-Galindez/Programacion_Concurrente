@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP_5.Ejercicio2;
+package TP_5.Ejercicio5;
 
 import java.util.Random;
 
@@ -10,26 +10,27 @@ import java.util.Random;
  *
  * @author galin
  */
-public class Cocinero implements Runnable {
+public class GestorTren implements Runnable {
 
-    private Silla silla;
+    private Tren tren;
 
-    public Cocinero(Silla silla) {
-        this.silla = silla;
+    public GestorTren(Tren tren) {
+        this.tren = tren;
     }
 
     public void run() {
         while (true) {
-            silla.cocinarEmpleado();
-            cocinando();
-            silla.esperaProximoEmpleadoCocinero();
+            tren.iniciarViaje();
+            viajando();
+            tren.finalizarViaje();
         }
+
     }
 
-    public void cocinando() {
+    public void viajando() {
         try {
             Thread.sleep((new Random()).nextInt(1000) + 1000);
-            System.out.println("cocinando...");
+            System.out.println("Viajando...");
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }

@@ -13,15 +13,15 @@ public class Main {
     public static void main(String[] args) {
         Libro libro = new Libro();
         Thread lectores[] = new Thread[4];
-        Thread escritores[] = new Thread[3];
+        Thread escritores[] = new Thread[4];
 
         for (int i = 0; i < lectores.length; i++) {
             lectores[i] = new Thread(new Lector(libro));
         }
-
         for (int i = 0; i < escritores.length; i++) {
             escritores[i] = new Thread(new Escritor(libro));
         }
+
         for (int i = 0; i < escritores.length; i++) {
             escritores[i].start();
         }
