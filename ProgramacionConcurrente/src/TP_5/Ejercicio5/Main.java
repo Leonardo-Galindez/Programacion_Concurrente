@@ -12,8 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
         Tren tren = new Tren();
-        
-        Thread pasajeros[] = new Thread[20];
+
+        Thread pasajeros[] = new Thread[10];
 
         Thread hiloGestor = new Thread(new GestorTren(tren));
         Thread hiloTickets = new Thread(new VendedorTickets(tren));

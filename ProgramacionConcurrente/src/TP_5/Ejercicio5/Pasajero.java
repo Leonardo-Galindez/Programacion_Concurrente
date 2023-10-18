@@ -17,9 +17,8 @@ public class Pasajero implements Runnable {
     }
 
     public void run() {
-
+        //tren.comprarTicket();
         tren.subirTren();
         tren.bajarTren();
-
     }
 }
