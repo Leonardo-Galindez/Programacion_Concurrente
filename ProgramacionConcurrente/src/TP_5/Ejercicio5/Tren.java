@@ -18,20 +18,22 @@ public class Tren {
     private Semaphore inicioViaje;
     private Semaphore finViaje;
     private Semaphore tickets;
+    private Semaphore avilitarEntrada;
     private int cont;
 
     public Tren() {
         this.capacidad = new Semaphore(5);//sirve para indicar capacidad de asientos 
+        this.avilitarEntrada = new Semaphore(0);
         this.inicioViaje = new Semaphore(0);//sirve para indicar cuando este lleno el tren y iniciar el viaje
         this.finViaje = new Semaphore(0);//sirve para indicar cuando termina el viaje y pueden bajar todos lo pasajeros
-        this.tickets = new Semaphore(20);//sirve para indicar la cantidad de tickets disponibles
+        this.tickets = new Semaphore(3);//sirve para indicar la cantidad de tickets disponibles
         this.cont = 0;//atributo para saber cuando podemos liberar el viaje
     }
 
     //Metodos de Pasajero
     public void comprarTicket() {
         try {
-            tickets.acquire();
+            tickets.acquire();           
             System.out.println(Thread.currentThread().getName() + " compro un ticket");
         } catch (InterruptedException ex) {
             Logger.getLogger(Tren.class.getName()).log(Level.SEVERE, null, ex);

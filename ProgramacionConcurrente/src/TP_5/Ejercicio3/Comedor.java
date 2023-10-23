@@ -18,8 +18,11 @@ public class Comedor {
     private Semaphore gatos;
     private Semaphore perros;
     private Semaphore mutexEspecie;
+
     private int comedores = 2;//cantidad de comedores
     private int cont = 0;
+
+    private int max = 5;
     private int contPerrosComiendo = 0;//
     private int contGatosComiendo = 0;
     private int contPerrosEsperando = 0;
@@ -32,6 +35,16 @@ public class Comedor {
     }
 
     //Metodos Perro
+    public void ingresarComedorPerro() {
+        try {
+            mutexEspecie.acquire();
+            contPerrosEsperando++;
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void comerPerro() {
         try {
             perros.acquire();
@@ -73,6 +86,16 @@ public class Comedor {
     }
 
     //Metodo Gato
+    public void ingresarComedorGatos() {
+        try {
+            mutexEspecie.acquire();
+            contGatosEsperando++;
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void comerGato() {
         try {
             gatos.acquire();

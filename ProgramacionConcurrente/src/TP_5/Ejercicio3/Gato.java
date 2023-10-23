@@ -19,6 +19,7 @@ public class Gato implements Runnable {
     }
 
     public void run() {
+        comedor.ingresarComedorGatos();
         comedor.comerGato();
         comiendo();
         comedor.finalizarComerGato();
