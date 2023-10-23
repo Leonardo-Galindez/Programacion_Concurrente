@@ -19,7 +19,8 @@ public class Perro implements Runnable {
     }
 
     public void run() {
-        comedor.ingresarComedorPerro();
+        comedor.ingresarComedor();
+        comedor.turno();
         comedor.comerPerro();
         comiendo();
         comedor.finalizarComerPerro();
