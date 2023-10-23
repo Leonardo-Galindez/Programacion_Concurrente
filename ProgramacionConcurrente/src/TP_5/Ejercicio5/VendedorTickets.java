@@ -18,11 +18,11 @@ public class VendedorTickets implements Runnable {
         this.tren = tren;
     }
 
-    public synchronized void contarPasajero(int cantTickets) {
+    public void contarPasajero(int cantTickets) {
         cantPasajerosTotal = cantPasajerosTotal + cantTickets;
     }
 
     public void run() {
-
+        
     }
 }

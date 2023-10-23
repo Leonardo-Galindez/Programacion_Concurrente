@@ -2,23 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP_5.Ejercicio6;
+package LaExposicion;
 
 /**
  *
  * @author galin
  */
-public class Avion implements Runnable {
+public class Criticos {
 
-    private Pista pista;
-
-    public Avion(Pista pista) {
-        this.pista = pista;
-    }
-
-    public void run() {
-
-    }
+    private String tipo = "c";
+    private Galeria galeria;
     
-    
+    public String getTipo() {
+        return tipo;
+    }
 }
