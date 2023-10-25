@@ -35,6 +35,15 @@ public class Perro implements Runnable {
         }
     }
 
+    public void esperando() {
+        try {
+            Thread.sleep((new Random()).nextInt(1000) + 1000);
+
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public String getTipo() {
         return tipo;
     }

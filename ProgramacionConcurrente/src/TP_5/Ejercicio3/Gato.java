@@ -20,17 +20,24 @@ public class Gato implements Runnable {
     }
 
     public void run() {
-        comedor.ingresarComedor(tipo);
+        comedor.ingresarComedor(tipo);     
         comedor.comerGato(tipo);
         comiendo();
         comedor.finalizarComerGato();
-
     }
 
     public void comiendo() {
         try {
             Thread.sleep((new Random()).nextInt(1000) + 1000);
             System.out.println("Comiendo...");
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void esperando() {
+        try {
+            Thread.sleep((new Random()).nextInt(1000) + 1000);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
