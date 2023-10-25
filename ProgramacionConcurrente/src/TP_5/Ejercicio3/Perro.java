@@ -13,15 +13,15 @@ import java.util.Random;
 public class Perro implements Runnable {
 
     private Comedor comedor;
+    private static final String tipo = "P";
 
     public Perro(Comedor comedor) {
         this.comedor = comedor;
     }
 
     public void run() {
-        comedor.ingresarComedor();
-        comedor.turno();
-        comedor.comerPerro();
+        comedor.ingresarComedor(tipo);
+        comedor.comerPerro(tipo);
         comiendo();
         comedor.finalizarComerPerro();
     }
@@ -33,5 +33,9 @@ public class Perro implements Runnable {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public String getTipo() {
+        return tipo;
     }
 }

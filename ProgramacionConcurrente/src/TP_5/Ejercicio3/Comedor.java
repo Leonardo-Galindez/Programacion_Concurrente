@@ -14,27 +14,152 @@ import java.util.logging.Logger;
  */
 public class Comedor {
 
-    //private Semaphore cantidad;
-    private String tipo;
-    private Semaphore turno;
     private Semaphore comedores;
     private Semaphore mutexEspecie;
 
-    //private int comedores = 2;//cantidad de comedores
-    private int cont = 0;
+    private int cont = 1;//contador para finalizar de comer
+    private int cantComedores = 3;
+    private int max = 3;//maximo animales mismo tipo que comieron
+    private String tipo;// tipos de la especie con el turno
 
-    private int max = 3;//maximo animales mismo tipo
-    private int contPerrosComiendo = 0;//
-    private int contGatosComiendo = 0;
     private int contPerrosEsperando = 0;
+    private int contPerrosComiendo = 0;
+    private int contPerrosComieron = 0;
+
     private int contGatosEsperando = 0;
+    private int contGatosComiendo = 0;
+    private int contGatosComieron = 0;
 
     public Comedor() {
-        this.turno = new Semaphore(1);
-        this.comedores = new Semaphore(3);
-        this.mutexEspecie = new Semaphore(1);//sirve para el contador de seccion critica
+        this.comedores = new Semaphore(cantComedores);//cantidad de comedores disponibles
+        this.mutexEspecie = new Semaphore(1);//sirve para la exclusion mutua 
+        //tendria que entrar por parametros la cantidad de perros y gatos que quieren comer??
     }
 
+    //Metodo de gato y perro
+    //Metodo para verificar el tipo del animal y contarlos
+    public void ingresarComedor(String unTipo) {
+        try {
+            mutexEspecie.acquire();
+            //primera vez
+            if (contPerrosEsperando == 0 && contGatosEsperando == 0
+                    && contGatosComiendo == 0 && contPerrosComiendo == 0) {
+                //definimos el tipo del primer animal que entra
+                if (unTipo.equals("P")) {
+                    tipo = "P";
+                } else {
+                    tipo = "G";
+                }
+            }
+            if (unTipo.equals("P")) {
+                contPerrosEsperando++;
+            } else {
+                contGatosEsperando++;
+            }
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    //CONSULTAR COMO HACER EL CAMBIO DE PRIORIDAD
+    //Metodos de Perro
+    public void comerPerro(String unTipo) {
+        try {
+            comedores.acquire();
+            mutexEspecie.acquire();
+            if (tipo.equals("P")) {
+                if (contPerrosEsperando != 0) {
+                    System.out.println("El perro " + Thread.currentThread().getName() + " esta comiendo");
+                    contPerrosEsperando--;
+                    contPerrosComiendo++;
+                    contPerrosComieron++;
+                    cont++;
+                    if (contPerrosComieron == max) {
+                        //cambio de prioridad
+                        tipo = "G";
+                    }
+                } else {
+                    if (contGatosEsperando != 0) {
+                        //cambio de prioridad
+                        tipo = "G";
+                    }
+                }
+            } else {
+                comedores.release();
+            }
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void finalizarComerPerro() {
+        try {
+            mutexEspecie.acquire();
+            if (contPerrosComiendo != 0) {
+                System.out.println("El perro " + Thread.currentThread().getName() + " termino de comer");
+                contPerrosComiendo--;
+                if (contPerrosComiendo == 0) {
+                    comedores.release(cantComedores);
+                }
+            }
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void comerGato(String unTipo) {
+        try {
+            comedores.acquire();
+            mutexEspecie.acquire();
+            if (unTipo.equals("G")) {
+                if (contGatosEsperando != 0) {
+                    System.out.println("El gato " + Thread.currentThread().getName() + " esta comiendo");
+                    contGatosEsperando--;
+                    contGatosComiendo++;
+                    contGatosComieron++;
+                    if (contGatosComieron == max && contPerrosEsperando != 0) {
+                        //cambio de prioridad
+        
+                        tipo = "P";
+                        //liberamos los comedores
+                    }
+                } else {
+                    if (contPerrosEsperando != 0) {
+                        //cambio de prioridad
+                        tipo = "P";
+                        //liberamos los comedores
+                    }
+                }
+            } else {
+                comedores.release();
+            }
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void finalizarComerGato() {
+        try {
+            mutexEspecie.acquire();
+            if (contGatosComiendo != 0) {
+                System.out.println("El gato " + Thread.currentThread().getName() + " termino de comer");
+                contGatosComiendo--;
+                if (contGatosComiendo == 0) {
+                    System.out.println("termino");
+                    comedores.release(cantComedores);
+                }
+            }
+            mutexEspecie.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /*
     //Metodos Perro
     //metodo para saber cuantos animales de cada especie quieren comer
     public void ingresarComedor() {
@@ -93,7 +218,6 @@ public class Comedor {
 
     public void finalizarComerPerro() {
         try {
-            System.out.println(cont);
             mutexEspecie.acquire();
             if (cont != 0) {
                 System.out.println("El perro " + Thread.currentThread().getName() + " termino de comer");
@@ -155,4 +279,5 @@ public class Comedor {
             Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     */
 }
