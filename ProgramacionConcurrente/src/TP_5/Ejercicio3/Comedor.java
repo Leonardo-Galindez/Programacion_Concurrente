@@ -18,11 +18,8 @@ public class Comedor {
     private Semaphore gatos;
     private Semaphore mutexEspecie;
 
-    private int cont = 0;//contador para finalizar de comer
-    private int cantComedores = 3;
-    private int max = 4;//maximo animales mismo tipo que comieron
-    private int auxMax = max;
-    private String tipo;// tipos de la especie con el turno
+    private int cantComedores = 12;//cantidad de comedores disponibles
+    private int max = 15;//maximo animales mismo tipo que comieron
 
     private int contPerrosEsperando = 0;
     private int contPerrosComiendo = 0;
@@ -45,7 +42,6 @@ public class Comedor {
             //primera vez
             if (contPerrosEsperando == 0 && contGatosEsperando == 0
                     && contGatosComiendo == 0 && contPerrosComiendo == 0) {
-                tipo = unTipo;
                 if (unTipo.equals("P")) {
                     //tomamos los permisos de los gatos
                     gatos.acquire(cantComedores);
@@ -56,7 +52,6 @@ public class Comedor {
             }
             //contamos la cantidad de perros y gatos esperando
             if (unTipo.equals("P")) {
-                //tendria que agreagar un contador para el contEsperando para comer y tro para entrar ??
                 contPerrosEsperando++;
             } else {
                 contGatosEsperando++;
@@ -75,8 +70,6 @@ public class Comedor {
             System.out.println("El perro " + Thread.currentThread().getName() + " esta comiendo");
             contPerrosEsperando--;
             contPerrosComiendo++;
-            auxMax--;//vamos restanto el maximo permitido
-            cont++;//cantidad de perros que estan comiendo para el release
             mutexEspecie.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -93,15 +86,19 @@ public class Comedor {
                 if (contPerrosComieron == max && contGatosEsperando != 0) {
                     //cambio de prioridad
                     //liberamos permisos de gatos
+                    contPerrosComieron = 0;
                     gatos.release(cantComedores);
                 } else {
                     if (contGatosEsperando != 0 && contPerrosEsperando == 0) {
                         //liberamos permisos de gatos
                         gatos.release(cantComedores);
                     } else {
-                        //liberamos los perror que estaban comiendo que puede no ser la cantidad de comedores
-                        perros.release(auxMax);
-                        auxMax = max;
+                        if (max % cantComedores != 0) {
+                            //obtenesmos el resto para saber cuanto liberar 
+                            perros.release(max % cantComedores);
+                        } else {
+                            perros.release(cantComedores);
+                        }
                     }
                 }
             }
@@ -118,8 +115,6 @@ public class Comedor {
             System.out.println("El gato " + Thread.currentThread().getName() + " esta comiendo");
             contGatosEsperando--;
             contGatosComiendo++;
-            auxMax--;
-            cont++;//cantidad de gatos que estan comiendo para el release
             mutexEspecie.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -132,19 +127,23 @@ public class Comedor {
             System.out.println("El gato " + Thread.currentThread().getName() + " termino de comer");
             contGatosComiendo--;
             contGatosComieron++;
-            if (contPerrosComiendo == 0) {
+            if (contGatosComiendo == 0) {
                 if (contGatosComieron == max && contPerrosEsperando != 0) {
                     //cambio de prioridad
-                    //liberamos permisos de gatos
+                    //liberamos permisos de peros
+                    contGatosComieron = 0;
                     perros.release(cantComedores);
                 } else {
                     if (contPerrosEsperando != 0 && contGatosEsperando == 0) {
-                        //liberamos permisos de gatos
+                        //liberamos permisos de perros
                         perros.release(cantComedores);
                     } else {
-                        //liberamos los gatos que estaban comiendo que puede no ser la cantidad de comedores
-                        gatos.release(auxMax);
-                        auxMax = max;
+                        if (max % cantComedores != 0) {
+                            //obtenesmos el resto para saber cuanto liberar 
+                            gatos.release(max % cantComedores);
+                        } else {
+                            gatos.release(cantComedores);
+                        }
                     }
                 }
             }
@@ -153,126 +152,4 @@ public class Comedor {
             Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    /*
-    //Metodos Perro
-    //metodo para saber cuantos animales de cada especie quieren comer
-    public void ingresarComedor() {
-        try {
-            mutexEspecie.acquire();
-            if (Thread.currentThread().getName().equals("P")) {
-                //liberamos los perros 
-                contPerrosEsperando++;
-            } else {
-                //liberamos los gatos
-                contGatosEsperando++;
-            }
-            mutexEspecie.release();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void turno() {
-        //solo lo ejecutamos una vez para saber el primer animal que entra
-        turno.tryAcquire();
-        if (Thread.currentThread().getName().equals("P")) {
-            tipo = "P";
-        } else {
-            tipo = "G";
-        }
-    }
-
-    public void comerPerro() {
-        try {
-            comedores.acquire();
-            mutexEspecie.acquire();
-            if (tipo.equals("P")) {
-                cont++;
-                contPerrosComiendo++;
-                contPerrosEsperando--;
-                System.out.println("El perro " + Thread.currentThread().getName() + " empezo a comer");
-                if (contPerrosComiendo == max) {
-                    //cambio de prioridad
-                    if (contGatosEsperando != 0) {
-                        tipo = "G";
-                    } else {
-                        //recetiamos porque no hay gatos esperando 
-                        contPerrosComiendo = 0;
-                    }
-                }
-            } else {
-                //si es gato libera porque estan los perros
-                comedores.release();
-            }
-            mutexEspecie.release();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void finalizarComerPerro() {
-        try {
-            mutexEspecie.acquire();
-            if (cont != 0) {
-                System.out.println("El perro " + Thread.currentThread().getName() + " termino de comer");
-                cont--;
-                if (cont == 0) {
-                    //liberamos todos los comedores y los permisos de los gatos para que pueden comer
-                    comedores.release(3);
-                   
-                }
-            }
-            mutexEspecie.release();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    //Metodo Gato
-    public void comerGato() {
-        try {
-            comedores.acquire();
-            mutexEspecie.acquire();
-            if (tipo.equals("G")) {
-                cont++;
-                contGatosComiendo++;
-                contGatosEsperando--;
-                System.out.println("El gato " + Thread.currentThread().getName() + " empezo a comer");
-                if (contGatosComiendo == max) {
-                    //cambio de prioridad
-                    if (contPerrosEsperando != 0) {
-                        tipo = "P";
-                    } else {
-                        //recetiamos porque no hay gatos esperando 
-                        contGatosComiendo = 0;
-                    }
-                }
-            } else {
-                comedores.release();
-            }
-            mutexEspecie.release();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void finalizarComerGato() {
-        try {
-            System.out.println(cont);
-            mutexEspecie.acquire();
-            if (cont != 0) {
-                System.out.println("El gato " + Thread.currentThread().getName() + " termino de comer");
-                cont--;
-                if (cont == 0) {
-                    //liberamos todos los comedores y los permisos de los gatos para que pueden comer
-                    comedores.release(3);                  
-                }
-            }
-            mutexEspecie.release();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-     */
 }
