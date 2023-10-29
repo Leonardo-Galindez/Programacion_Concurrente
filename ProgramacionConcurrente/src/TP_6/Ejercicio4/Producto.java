@@ -2,12 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Exposicion;
+package TP_6.Ejercicio4;
 
 /**
  *
  * @author galin
  */
-public class Cola {
+public class Producto {
+   
+    
     
 }

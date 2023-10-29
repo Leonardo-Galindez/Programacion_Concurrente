@@ -22,7 +22,7 @@ public class Museo {
         this.responsable = false;//variable de control 
     }
 
-    public void entrarVisitante() throws InterruptedException {
+    public synchronized void entrarVisitante() throws InterruptedException {
         while (this.criticoEsperando || this.critico || cantVisitantes >= capacidad) {
             System.out.println(Thread.currentThread().getName() + " TIENE QUE ESPERAR...");
             //ponemos al visitante en espera
@@ -33,7 +33,7 @@ public class Museo {
         this.cantVisitantes++;
     }
 
-    public void entrarResponsable() throws InterruptedException {
+    public synchronized void entrarResponsable() throws InterruptedException {
         while (this.criticoEsperando || this.critico || this.responsable) {
             System.out.println(Thread.currentThread().getName() + " TIENE QUE ESPERAR...");
             //ponemos al responsable en espera 
@@ -43,7 +43,7 @@ public class Museo {
         this.responsable = true;
     }
 
-    public void entrarCritico() throws InterruptedException {
+    public synchronized void entrarCritico() throws InterruptedException {
 
         while (this.criticoEsperando || this.critico || this.responsable || this.cantVisitantes != 0) {
             System.out.println(Thread.currentThread().getName() + " TIENE QUE ESPERAR...");
@@ -56,19 +56,19 @@ public class Museo {
         this.criticoEsperando = true;
     }
 
-    public void salirVisitante() {
+    public synchronized void salirVisitante() {
         this.cantVisitantes--;
         //this.notify();//opcion 2
         this.notifyAll();
     }
 
-    public void salirResponsable() {
+    public synchronized void salirResponsable() {
         this.responsable = false;
         //this.notify();//opcion 2
         this.notifyAll();
     }
 
-    public void salirCritico() {
+    public synchronized void salirCritico() {
         this.critico = false;
         //this.notify();//opcion 2
         this.notifyAll();
