@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        Buffer almacen = new Buffer(10);
+        Buffer almacen = new Buffer(5);
 
         Thread hiloProductor = new Thread(new Productor(almacen));
         Thread hiloConsumidor = new Thread(new Consumidor(almacen));

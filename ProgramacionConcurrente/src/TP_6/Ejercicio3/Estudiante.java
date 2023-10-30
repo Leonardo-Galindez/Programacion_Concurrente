@@ -21,7 +21,7 @@ public class Estudiante implements Runnable {
     }
 
     public void run() {
-
+        //arreglar concurrencuia a la hora de que salgan y entren nuevos a la cola
         try {
             sala.ingresarSala();
             estudiando();

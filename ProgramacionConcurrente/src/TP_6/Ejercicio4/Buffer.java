@@ -23,28 +23,29 @@ public class Buffer {
     }
 
     //El Productor pone un producto en el almacen
-    public synchronized void ponerProducto() throws InterruptedException {
-        System.out.println("");
-        while (cantProductos == capacidad) {
+    public synchronized void ponerProducto() throws InterruptedException {     
+        while (cantProductos >= capacidad) {
             //ponemos en espera al Productor
             this.wait();
-        }       
+        }
         cantProductos++;
         Producto unProducto = new Producto();
-        almacen.poner(new Producto());
-        System.out.println("Productor " + Thread.currentThread().getName() + " pone un producto");
+        almacen.poner(unProducto);
+        System.out.println("Productor " + Thread.currentThread().getName() + " pone un producto" + unProducto.getId());
     }
 
     //El consumidor saca un producto del almacen
-    public synchronized void sacarProducto() throws InterruptedException {
-        while (cantProductos == 0) {
+    public synchronized void sacarProducto() throws InterruptedException {   
+        while (cantProductos <= 0) {
             this.wait();
-        } 
+        }
         cantProductos--;
+        Producto unProducto = (Producto) almacen.obtenerFrente();
         almacen.sacar();
-        System.out.println("Consumidor " + Thread.currentThread().getName() + " consume un producto");
-        //avisamos que hay un lugar habilitado
+        System.out.println("Consumidor " + Thread.currentThread().getName() + " consume un producto" + unProducto.getId());    
+        //El consumidor le notifica al producto que hay lugar
         this.notify();
+
     }
 
 }

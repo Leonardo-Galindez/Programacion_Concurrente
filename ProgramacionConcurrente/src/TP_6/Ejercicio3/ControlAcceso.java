@@ -11,7 +11,7 @@ package TP_6.Ejercicio3;
 public class ControlAcceso {
 
     public static void main(String[] args) {
-        Sala sala = new Sala(10);
+        Sala sala = new Sala(5);
         Thread hiloEstudiantes[] = new Thread[20];
 
         for (int i = 0; i < hiloEstudiantes.length; i++) {
