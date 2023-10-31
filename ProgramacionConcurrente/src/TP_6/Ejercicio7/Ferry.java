@@ -54,6 +54,13 @@ public class Ferry {
         }
         contAutos--;
     }
+
+    //Metodos ControlFerry
+    public void iniciarViaje() throws InterruptedException {
+        while (contPasajeros < capacidadPasajeros) {
+            this.wait();
+        }
+    }
     //el ferry seria otro hilo ??? para tener el metodo fianlizar trayecto y iniciar trayecto
     //para que habilite a los pasajeros y autosd a bajar
 }
