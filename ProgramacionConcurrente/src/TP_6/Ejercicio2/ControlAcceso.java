@@ -17,10 +17,9 @@ public class ControlAcceso {
         for (int i = 0; i < hiloEstudiantes.length; i++) {
             hiloEstudiantes[i] = new Thread(new Estudiante(sala));
         }
-        
-        for(int i=0;i<hiloEstudiantes.length;i++){
+
+        for (int i = 0; i < hiloEstudiantes.length; i++) {
             hiloEstudiantes[i].start();
         }
-
     }
 }

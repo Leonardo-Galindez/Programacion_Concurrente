@@ -24,7 +24,7 @@ public class Consumidor implements Runnable {
         while (true) {
             try {            
                 almacen.sacarProducto();
-                //espera();
+                espera();
             } catch (InterruptedException ex) {
                 Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
             }

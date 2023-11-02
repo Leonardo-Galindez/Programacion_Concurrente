@@ -21,19 +21,19 @@ public class Productor implements Runnable {
     }
 
     public void run() {
-        while(true){
+        while (true) {
             try {
                 almacen.ponerProducto();
-                //espera();
+                
             } catch (InterruptedException ex) {
                 Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
-    public void espera(){
+
+    private void espera() {
         try {
-            Thread.sleep((new Random()).nextInt(1000)+1000);
+            Thread.sleep((new Random()).nextInt(1000) + 1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
         }

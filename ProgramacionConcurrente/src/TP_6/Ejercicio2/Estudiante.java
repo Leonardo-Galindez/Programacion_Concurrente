@@ -22,7 +22,6 @@ public class Estudiante implements Runnable {
 
     public void run() {
         try {
-            
             sala.ingresarSala();
             estudiando();
             sala.salirSala();

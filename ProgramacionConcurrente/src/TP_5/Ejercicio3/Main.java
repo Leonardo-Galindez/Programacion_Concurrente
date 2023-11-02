@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         //si la cantidad de platos es par la cantidad de gatos y perros tiene que ser par sino no
         Thread hiloPerros[] = new Thread[22];//si hacemos ambos impares no anda
-        Thread hiloGatos[] = new Thread[0];//si son pareas anda sino no anda 
+        Thread hiloGatos[] = new Thread[5];//si son pareas anda sino no anda 
         Comedor comedor = new Comedor();
         for (int i = 0; i < hiloPerros.length; i++) {
             hiloPerros[i] = new Thread(new Perro(comedor));
