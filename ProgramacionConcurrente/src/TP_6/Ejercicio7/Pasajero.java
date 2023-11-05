@@ -21,8 +21,8 @@ public class Pasajero implements Runnable {
 
     public void run() {
         try {
-            ferry.ingresarPasajero();
-            ferry.salirPasajero();
+            ferry.subirPasajero();
+            ferry.bajarPasajero();
         } catch (InterruptedException ex) {
             Logger.getLogger(Pasajero.class.getName()).log(Level.SEVERE, null, ex);
         }

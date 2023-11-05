@@ -24,8 +24,8 @@ public class Auto implements Runnable {
         //int espacio = (new Random()).nextInt(3) + 3;
         int espacio=2;
         try {
-            ferry.ingresarAuto(espacio);
-            ferry.salirAuto(espacio);
+            ferry.subirAuto(espacio);
+            ferry.bajarAuto(espacio);
         } catch (InterruptedException ex) {
             Logger.getLogger(Auto.class.getName()).log(Level.SEVERE, null, ex);
         }

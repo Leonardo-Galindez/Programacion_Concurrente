@@ -12,80 +12,86 @@ public class Ferry {
 
     private int capacidadPasajeros;
     private int capacidadAutos;
-    private int contPasajeros = 0;
-    private int contAutos = 0;
-    private boolean bajarPasajero = false;
-    private boolean bajarAuto = false;
-    private boolean viajando = false;
+
+    private int contPasajeros;
+    private int contAutos;
+    private int contPasajerosEs;
+    private int contAutosEs;
+
+    private boolean llegoDestino = false;
+    private boolean iniciarViaje = false;
 
     public Ferry(int capacidadPasajeros, int capacidadAutos) {
         this.capacidadPasajeros = capacidadPasajeros;
         this.capacidadAutos = capacidadAutos;
+        this.contPasajeros = capacidadPasajeros;
+        this.contAutos = capacidadAutos;
     }
 
-    //metodos Pasajeros
-    public synchronized void ingresarPasajero() throws InterruptedException {
-        while (contPasajeros >= capacidadPasajeros || viajando) {
-            System.out.println("El pasajero " + Thread.currentThread().getName() + " esta esperando en el puerto");
+    public synchronized void subirPasajero() throws InterruptedException {
+        contPasajerosEs++;
+        while (contPasajeros <= 0 || iniciarViaje) {
             this.wait();
         }
         System.out.println("El pasajero " + Thread.currentThread().getName() + " subio al ferry");
-        contPasajeros++;
-        if (contPasajeros >= capacidadPasajeros) {
-            this.notifyAll();
-        }
-    }
-
-    public synchronized void salirPasajero() throws InterruptedException {
-        while (!bajarPasajero || viajando) {
-            this.wait();
-        }
-        System.out.println("El pasajero " + Thread.currentThread().getName() + " bajo del ferry");
         contPasajeros--;
+        contPasajerosEs--;
+        if (contPasajeros == 0) {
+            this.notify();//como solo esta el hilo del control esperando lo notificamos
+        }
     }
 
-    //Metodos Autos
-    public synchronized void ingresarAuto(int espacio) throws InterruptedException {
-        //ingresar cola
-        while (contAutos + espacio >= capacidadAutos || viajando) {
-            System.out.println("El pasajero " + Thread.currentThread().getName() + " esta esperando en el puerto");
+    public synchronized void subirAuto(int espacio) throws InterruptedException {
+        contAutosEs++;
+        while ((contAutos) <= 0 || iniciarViaje) {
             this.wait();
         }
-        //salir cola
         System.out.println("El auto " + Thread.currentThread().getName() + " subio al ferry");
-        contAutos += espacio;
-        if (contAutos >= capacidadPasajeros) {
-            this.notifyAll();
-        }
-    }
-
-    public synchronized void salirAuto(int espacio) throws InterruptedException {
-        while (!bajarAuto) {
-            this.wait();
-        }
-        System.out.println("El auto" + Thread.currentThread().getName() + " salio del ferry");
         contAutos -= espacio;
+        contAutosEs--;
+        if (contAutos == 0) {
+            this.notify();
+        }
     }
 
-    //Metodos ControlFerry
     public synchronized void iniciarViaje() throws InterruptedException {
-        //se llena capacidad de pasajeros y autos
-        System.out.println(contPasajeros);
-        System.out.println(contAutos);
-        while (contPasajeros <= capacidadPasajeros && contAutos <= capacidadAutos) {
+        while ((contPasajeros > 0 && contPasajerosEs > 0) || (contAutos > 0 && contAutosEs > 0)) {
             this.wait();
-            //this.wait(tiempo);->se bloques en el conjunto y se desbloquea solo
-            //iniciar=true para que iniciar auque no este lleno
+            this.notify();
         }
+        iniciarViaje = true;
         System.out.println("Inicio el viaje");
-        viajando = true;
     }
 
     public synchronized void finalizarViaje() throws InterruptedException {
         System.out.println("Finalizo el viaje");
-        bajarAuto = true;
-        bajarPasajero = true;
-        viajando = false;
+        llegoDestino = true;
         this.notifyAll();
+    }
+
+    public synchronized void bajarPasajero() throws InterruptedException {
+        while (!llegoDestino) {
+            this.wait();
+        }
+        System.out.println("El pasajero " + Thread.currentThread().getName() + " bajo del ferry");
+        contPasajeros--;
+        if (contPasajeros == this.capacidadPasajeros && contAutos == this.capacidadAutos) {
+            llegoDestino = false;
+            iniciarViaje = false;
+            System.out.println("Ferry VACIO");
+        }
+    }
+
+    public synchronized void bajarAuto(int espacio) throws InterruptedException {
+        while (!llegoDestino) {
+            this.wait();
+        }
+        System.out.println("El auto " + Thread.currentThread().getName() + " bajo del ferry");
+        contAutos -= espacio;
+        if (contPasajeros == this.capacidadPasajeros && contAutos == this.capacidadAutos) {
+            llegoDestino = false;
+            iniciarViaje = false;
+            System.out.println("Ferry VACIO");
+        }
     }
 }
