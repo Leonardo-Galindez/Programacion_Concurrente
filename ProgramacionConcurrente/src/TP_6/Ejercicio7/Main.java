@@ -11,9 +11,9 @@ package TP_6.Ejercicio7;
 public class Main {
 
     public static void main(String[] args) {
-        Ferry ferry = new Ferry(3, 6);
+        Ferry ferry = new Ferry(4, 10);
 
-        Thread hilosPasajeros[] = new Thread[12];
+        Thread hilosPasajeros[] = new Thread[8];
         Thread hilosAutos[] = new Thread[10];
         Thread hiloFerry = new Thread(new ControlFerry(ferry));
         for (int i = 0; i < hilosPasajeros.length; i++) {

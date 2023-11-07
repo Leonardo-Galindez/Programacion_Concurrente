@@ -37,7 +37,7 @@ public class Ferry {
         contPasajeros--;
         contPasajerosEs--;
         if (contPasajeros == 0) {
-            this.notify();//como solo esta el hilo del control esperando lo notificamos
+            this.notifyAll();//como solo esta el hilo del control esperando lo notificamos
         }
     }
 
@@ -50,14 +50,16 @@ public class Ferry {
         contAutos -= espacio;
         contAutosEs--;
         if (contAutos == 0) {
-            this.notify();
+            this.notifyAll();
         }
     }
 
     public synchronized void iniciarViaje() throws InterruptedException {
-        while ((contPasajeros > 0 && contPasajerosEs > 0) || (contAutos > 0 && contAutosEs > 0)) {
+        /* while ((contPasajeros > 0 && contAutos == 0) || (contPasajeros == 0 && contAutos > 0) || (contPasajeros > 0 && contAutos > 0)) {
             this.wait();
-            this.notify();
+        }*/
+        while (contPasajeros > 0 || contAutos > 0) {
+            this.wait();
         }
         iniciarViaje = true;
         System.out.println("Inicio el viaje");
@@ -74,7 +76,7 @@ public class Ferry {
             this.wait();
         }
         System.out.println("El pasajero " + Thread.currentThread().getName() + " bajo del ferry");
-        contPasajeros--;
+        contPasajeros++;
         if (contPasajeros == this.capacidadPasajeros && contAutos == this.capacidadAutos) {
             llegoDestino = false;
             iniciarViaje = false;
@@ -87,7 +89,7 @@ public class Ferry {
             this.wait();
         }
         System.out.println("El auto " + Thread.currentThread().getName() + " bajo del ferry");
-        contAutos -= espacio;
+        contAutos += espacio;
         if (contPasajeros == this.capacidadPasajeros && contAutos == this.capacidadAutos) {
             llegoDestino = false;
             iniciarViaje = false;
