@@ -4,6 +4,8 @@
  */
 package TP_6.Ejercicio7;
 
+import java.util.Queue;
+
 /**
  *
  * @author galin
@@ -17,6 +19,8 @@ public class Ferry {
     private int contAutos;
     private int contPasajerosEs;
     private int contAutosEs;
+    private Queue colaAutos;
+    private Queue colaPasajeros;
 
     private boolean llegoDestino = false;
     private boolean iniciarViaje = false;
@@ -29,11 +33,15 @@ public class Ferry {
     }
 
     public synchronized void subirPasajero() throws InterruptedException {
+        colaPasajeros.add(Thread.currentThread().getName());
         contPasajerosEs++;
-        while (contPasajeros <= 0 || iniciarViaje) {
+        while (contPasajeros <= 0 || iniciarViaje || (!colaPasajeros.peek().equals(Thread.currentThread().getName()))) {
+            this.notify();
             this.wait();
+
         }
         System.out.println("El pasajero " + Thread.currentThread().getName() + " subio al ferry");
+        colaPasajeros.remove();
         contPasajeros--;
         contPasajerosEs--;
         if (contPasajeros == 0) {
