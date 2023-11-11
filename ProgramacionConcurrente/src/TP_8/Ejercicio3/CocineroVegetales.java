@@ -8,6 +8,15 @@ package TP_8.Ejercicio3;
  *
  * @author galin
  */
-public class CocineroVegetales {
-    
+public class CocineroVegetales implements Runnable {
+
+    private Ingrediente ingrediente;
+
+    public CocineroVegetales(Ingrediente ingrediente) {
+        this.ingrediente = ingrediente;
+    }
+
+    public void run() {
+
+    }
 }

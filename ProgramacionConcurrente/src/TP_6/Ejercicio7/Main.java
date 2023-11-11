@@ -16,6 +16,7 @@ public class Main {
         Thread hilosPasajeros[] = new Thread[8];
         Thread hilosAutos[] = new Thread[10];
         Thread hiloFerry = new Thread(new ControlFerry(ferry));
+        
         for (int i = 0; i < hilosPasajeros.length; i++) {
             hilosPasajeros[i] = new Thread(new Pasajero(ferry));
         }

@@ -33,15 +33,11 @@ public class Ferry {
     }
 
     public synchronized void subirPasajero() throws InterruptedException {
-        colaPasajeros.add(Thread.currentThread().getName());
         contPasajerosEs++;
-        while (contPasajeros <= 0 || iniciarViaje || (!colaPasajeros.peek().equals(Thread.currentThread().getName()))) {
-            this.notify();
+        while (contPasajeros <= 0 || iniciarViaje) {
             this.wait();
-
         }
         System.out.println("El pasajero " + Thread.currentThread().getName() + " subio al ferry");
-        colaPasajeros.remove();
         contPasajeros--;
         contPasajerosEs--;
         if (contPasajeros == 0) {
@@ -51,7 +47,7 @@ public class Ferry {
 
     public synchronized void subirAuto(int espacio) throws InterruptedException {
         contAutosEs++;
-        while ((contAutos) <= 0 || iniciarViaje) {
+        while (contAutos <= 0 || iniciarViaje) {
             this.wait();
         }
         System.out.println("El auto " + Thread.currentThread().getName() + " subio al ferry");
@@ -63,12 +59,12 @@ public class Ferry {
     }
 
     public synchronized void iniciarViaje() throws InterruptedException {
-        /* while ((contPasajeros > 0 && contAutos == 0) || (contPasajeros == 0 && contAutos > 0) || (contPasajeros > 0 && contAutos > 0)) {
-            this.wait();
-        }*/
-        while (contPasajeros > 0 || contAutos > 0) {
+        while ((contPasajeros > 0 && contAutos == 0) || (contPasajeros == 0 && contAutos > 0) || (contPasajeros > 0 && contAutos > 0)) {
             this.wait();
         }
+        /* while (contPasajeros > 0 || contAutos > 0) {
+            this.wait();
+        }*/
         iniciarViaje = true;
         System.out.println("Inicio el viaje");
     }
@@ -80,7 +76,7 @@ public class Ferry {
     }
 
     public synchronized void bajarPasajero() throws InterruptedException {
-        while (!llegoDestino) {
+        while (!llegoDestino || iniciarViaje) {
             this.wait();
         }
         System.out.println("El pasajero " + Thread.currentThread().getName() + " bajo del ferry");
@@ -93,7 +89,7 @@ public class Ferry {
     }
 
     public synchronized void bajarAuto(int espacio) throws InterruptedException {
-        while (!llegoDestino) {
+        while (!llegoDestino || iniciarViaje) {
             this.wait();
         }
         System.out.println("El auto " + Thread.currentThread().getName() + " bajo del ferry");
