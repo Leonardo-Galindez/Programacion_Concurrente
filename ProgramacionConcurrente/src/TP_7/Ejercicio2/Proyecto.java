@@ -57,7 +57,7 @@ public class Proyecto {
             System.out.println("El Programador " + Thread.currentThread().getName() + " tomo una computadora");
             contC++;
         } catch (InterruptedException ex) {
-            Logger.getLogger(Proyecto.class.getName()).log(Level.SEVERE, null, ex);
+           ex.printStackTrace();
         } finally {
             acceso.unlock();
         }

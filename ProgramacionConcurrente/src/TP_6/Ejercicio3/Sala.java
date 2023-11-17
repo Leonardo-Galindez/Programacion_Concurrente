@@ -13,41 +13,38 @@ import java.util.concurrent.Semaphore;
  */
 public class Sala {
 
-    private int sillasOcupadas;
-    private int capacidad;
-    private Semaphore silla;
+    private Semaphore mesas;
     private Semaphore mutexSala;
-    private Cola colaEspera;
+    private int cantEstudiates;
+    private int cantMesas;
 
-    public Sala(int capacidad) {
-        this.silla = new Semaphore(capacidad);
-        this.capacidad = capacidad;
+    public Sala(int cantMesas) {
+        this.cantMesas = cantMesas;
+        this.mesas = new Semaphore(cantMesas, true);
         this.mutexSala = new Semaphore(1);
-        this.colaEspera = new Cola();
-        this.sillasOcupadas = 0;
+        this.cantEstudiates = 0;
     }
 
     public void ingresarSala() throws InterruptedException {
-        mutexSala.acquire();        
-        if (capacidad <= sillasOcupadas) {
-            System.out.println("Estudiante " + Thread.currentThread().getName() + " esta haciendo cola");
-            colaEspera.poner(Thread.currentThread());    
+        mutexSala.acquire();
+        cantEstudiates++;
+        System.out.println(cantEstudiates);
+        if (cantEstudiates >= cantMesas) {
+            System.out.println("--El estudiante " + Thread.currentThread().getName() + " esta haciendo cola");
         }
-        sillasOcupadas++;
         mutexSala.release();
-        silla.acquire();
-        mutexSala.acquire(); 
-        System.out.println("Estudiante " + Thread.currentThread().getName() + " ocupo una silla");
+        mesas.acquire();
+        System.out.println("El estudiante " + Thread.currentThread().getName() + " ingreso a la sala");
+        mutexSala.acquire();
+        cantEstudiates--;
         mutexSala.release();
     }
 
     public void salirSala() throws InterruptedException {
-        //tendrian que entrar en orden despues
+        System.out.println("El estudiante " + Thread.currentThread().getName() + " salio de la sala");
         mutexSala.acquire();
-        System.out.println("Estudiante " + Thread.currentThread().getName() + " desocupo una silla");
-        sillasOcupadas--;
-        colaEspera.sacar();
-        silla.release();
+        cantEstudiates--;
         mutexSala.release();
+        mesas.release();
     }
 }

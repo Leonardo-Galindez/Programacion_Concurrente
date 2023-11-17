@@ -22,13 +22,10 @@ public class AutoSur implements Runnable {
     }
 
     public void run() {
-        try {
-            gestor.entrarAutoSur();
-            cruzando();
-            gestor.salirAutoSur();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(AutoSur.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        gestor.ingresarControl(tipo);
+        gestor.cruzarAutoS();
+        cruzando();
+        gestor.salirAutoS();
     }
 
     public void cruzando() {

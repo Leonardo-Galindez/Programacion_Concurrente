@@ -59,12 +59,12 @@ public class Ferry {
     }
 
     public synchronized void iniciarViaje() throws InterruptedException {
-        while ((contPasajeros > 0 && contAutos == 0) || (contPasajeros == 0 && contAutos > 0) || (contPasajeros > 0 && contAutos > 0)) {
-            this.wait();
-        }
-        /* while (contPasajeros > 0 || contAutos > 0) {
+        /*while ((contPasajeros > 0 && contAutos == 0) || (contPasajeros == 0 && contAutos > 0) || (contPasajeros > 0 && contAutos > 0)) {
             this.wait();
         }*/
+        while (contPasajeros > 0 || contAutos > 0 || iniciarViaje) {
+            this.wait();
+        }
         iniciarViaje = true;
         System.out.println("Inicio el viaje");
     }
@@ -76,7 +76,7 @@ public class Ferry {
     }
 
     public synchronized void bajarPasajero() throws InterruptedException {
-        while (!llegoDestino || iniciarViaje) {
+        while (!llegoDestino) {
             this.wait();
         }
         System.out.println("El pasajero " + Thread.currentThread().getName() + " bajo del ferry");
@@ -89,7 +89,7 @@ public class Ferry {
     }
 
     public synchronized void bajarAuto(int espacio) throws InterruptedException {
-        while (!llegoDestino || iniciarViaje) {
+        while (!llegoDestino) {
             this.wait();
         }
         System.out.println("El auto " + Thread.currentThread().getName() + " bajo del ferry");

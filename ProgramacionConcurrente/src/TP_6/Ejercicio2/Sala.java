@@ -26,14 +26,15 @@ public class Sala {
 
     public synchronized void ingresarSala() throws InterruptedException {
         colaSala.add(Thread.currentThread());
-        System.out.println("Estudiante " + Thread.currentThread().getName() + " esta haciendo cola");
+        
         while (sillasOcupadas >= sillasTotales || (!colaSala.isEmpty() && !colaSala.peek().equals(Thread.currentThread()))) {
+            System.out.println("Estudiante " + Thread.currentThread().getName() + " esta haciendo cola");
             this.wait();
             //hace cola para entrar  
         }
         colaSala.remove();
+               sillasOcupadas++;
         System.out.println("Estudiante " + Thread.currentThread().getName() + " ocupo una silla");
-        sillasOcupadas++;
     }
 
     public synchronized void salirSala() {

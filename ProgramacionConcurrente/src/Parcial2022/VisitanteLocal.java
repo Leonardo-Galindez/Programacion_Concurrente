@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package TP_6.Ejercicio1;
+package Parcial2022;
 
 import java.util.Random;
 import java.util.logging.Level;
@@ -12,27 +12,25 @@ import java.util.logging.Logger;
  *
  * @author galin
  */
-public class AutoNorte implements Runnable {
+public class VisitanteLocal implements Runnable {
 
-    private static final String tipo = "N";
-    private GestorTrafico gestor;
+    private Parque parque;
 
-    public AutoNorte(GestorTrafico gestor) {
-        this.gestor = gestor;
+    public VisitanteLocal(Parque parque) {
+        this.parque = parque;
     }
 
     public void run() {
-        gestor.ingresarControl(tipo);
-        gestor.cruzarAutoN();
-        cruzando();
-        gestor.salirAutoN();
+        parque.entrarParqueLocal("Vl");
+        simulacion();
+        parque.salirParqueLocal("Vl");
     }
 
-    public void cruzando() {
+    public void simulacion() {
         try {
             Thread.sleep((new Random()).nextInt(1000) + 1000);
         } catch (InterruptedException ex) {
-            Logger.getLogger(AutoSur.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VisitanteLocal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
