@@ -12,7 +12,16 @@ public class Productor implements Runnable {
 
     @Override
     public void run() {
-       
+        int i = 0;
+        while (i != 3) {
+            try {
+                cola.producir();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            i++;
+        }
     }
 
 }

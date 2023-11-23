@@ -12,7 +12,14 @@ public class Consumidor implements Runnable {
 
     @Override
     public void run() {
-
+        while (true) {
+           try {
+                cola.consumir();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
 }

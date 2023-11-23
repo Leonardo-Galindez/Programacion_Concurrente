@@ -6,13 +6,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Planta {
     private Lock acceso;
+    private Lock vino;
+    private Lock agua;
+    private Lock almacen;
     // private Lock embotellador;
 
     private Condition embotelladorVino;
     private Condition embotelladorAgua;
-
     private Condition empaquetador;
-
     private Condition transportador;
 
     private int contVino = 0;
@@ -21,24 +22,28 @@ public class Planta {
     private boolean empacar = false;
     private boolean transportar = false;
     private boolean empaquetando = false;
+    private String tipo;// tipo de embotellador
+    private String tipoCaja; // caja llena
 
     public Planta() {
         this.acceso = new ReentrantLock();
+        this.almacen = new ReentrantLock();
+
         // this.embotellador = new ReentrantLock();
         // se puede trabajar en concurrencia cuando un
         // embotellador no llego la caja y otro si
 
-        this.embotelladorVino = acceso.newCondition();
-        this.embotelladorAgua = acceso.newCondition();
+        this.embotelladorVino = vino.newCondition();
+        this.embotelladorAgua = agua.newCondition();
 
         this.empaquetador = acceso.newCondition();
 
-        this.transportador = acceso.newCondition();
+        this.transportador = almacen.newCondition();
     }
 
     // Embotellador
 
-    public void prepararBotellaVino() {
+    public void guardarBotellaVino() {
         try {
             acceso.lock();
             while (contVino >= 10 || empaquetando) {
@@ -49,6 +54,7 @@ public class Planta {
             if (contVino == 10) {
                 System.out.println("CAJA DE VINO LLENA!!!");
                 empacar = true;
+                tipo = "t";
                 empaquetador.signalAll();
                 // mandar señal que es caja de agua ejemplo: mandar una "V" o algo asi
             }
@@ -59,7 +65,7 @@ public class Planta {
         }
     }
 
-    public void prepararBotellaAgua() {
+    public void guardarBotellaAgua() {
         try {
             acceso.lock();
             while (contAgua >= 10) {
@@ -84,6 +90,9 @@ public class Planta {
 
     public void empaquetarCaja() {
         try {
+            // tomamos los 2 lock de embotelladores
+            // verificamos el tipo de caja embotellada
+            // y liberamos el contrario
             acceso.lock();
             while (!empacar) {
                 empaquetador.await();
