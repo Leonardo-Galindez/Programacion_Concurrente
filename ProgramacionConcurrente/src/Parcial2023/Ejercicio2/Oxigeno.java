@@ -8,6 +8,10 @@ public class Oxigeno implements Runnable {
     }
 
     public void run() {
-
+        try {
+            agua.oListo();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,10 @@ public class Hidrogeno implements Runnable {
     }
 
     public void run() {
-
+        try {
+            agua.hListo();
+        } catch (InterruptedException ex) {
+            ex.printStackTrace();
+        }
     }
 }
