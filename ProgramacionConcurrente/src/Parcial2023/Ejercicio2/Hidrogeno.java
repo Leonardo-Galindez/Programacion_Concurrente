@@ -10,6 +10,7 @@ public class Hidrogeno implements Runnable {
 
     public void run() {
         try {
+            Thread.sleep(1000);
             agua.hListo();
         } catch (InterruptedException ex) {
             ex.printStackTrace();

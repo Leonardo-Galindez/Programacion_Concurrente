@@ -9,6 +9,7 @@ public class Oxigeno implements Runnable {
 
     public void run() {
         try {
+            Thread.sleep(1000);
             agua.oListo();
         } catch (InterruptedException ex) {
             ex.printStackTrace();
