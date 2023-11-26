@@ -1,16 +1,17 @@
 package Parcial2023.Ejercicio1;
 
-public class Transportador implements Runnable {
+public class Empaquetador implements Runnable {
 
     private Planta planta;
 
-    public Transportador(Planta planta) {
+    public Empaquetador(Planta planta) {
         this.planta = planta;
     }
 
     public void run() {
         while (true) {
-            planta.transportarCajas();
+            planta.empaquetarCaja();
+            planta.reponerCaja();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
