@@ -1,6 +1,4 @@
-package Parcial2023.Ejercicio1;
-
-import java.util.Random;
+package Parcial2023.Ejercicio1Semaforos;
 
 public class Main {
     public static void main(String[] args) {
@@ -9,8 +7,8 @@ public class Main {
         int num;
 
         Thread hiloEmbotellador[] = new Thread[10];
-        Thread hiloTransportador = new Thread(new Transportador(planta), "Transportador");
-        Thread hiloEmpaquetador = new Thread(new Transportador(planta), "Empaquetador");
+        Thread hiloTransportador = new Thread(new Transportador(planta), "Embotellador");
+        Thread hiloEmpaquetador = new Thread(new Transportador(planta), "Embotellador");
 
         for (int i = 0; i < hiloEmbotellador.length / 2; i++) {
             hiloEmbotellador[i] = new Thread(new Embotellador(planta, "V"), "Embotellador " + i);

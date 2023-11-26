@@ -1,4 +1,4 @@
-package Parcial2023.Ejercicio1;
+
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

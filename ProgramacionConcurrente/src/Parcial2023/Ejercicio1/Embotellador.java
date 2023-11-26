@@ -1,4 +1,4 @@
-package Parcial2023.Ejercicio1;
+
 
 public class Embotellador implements Runnable {
     private Planta planta;

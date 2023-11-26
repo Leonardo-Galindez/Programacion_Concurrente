@@ -1,7 +1,6 @@
-package Parcial2023.Ejercicio1Locks;
+package Parcial2023.Ejercicio1Semaforos;
 
 public class Transportador implements Runnable {
-
     private Planta planta;
 
     public Transportador(Planta planta) {
@@ -10,8 +9,8 @@ public class Transportador implements Runnable {
 
     public void run() {
         while (true) {
-            planta.transportarCajas();
             try {
+                planta.transportarCajas();
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
