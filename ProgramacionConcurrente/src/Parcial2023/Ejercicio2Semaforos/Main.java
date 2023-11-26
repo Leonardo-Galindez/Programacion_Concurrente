@@ -1,4 +1,4 @@
-package Parcial2023.Ejercicio2;
+package Parcial2023.Ejercicio2Semaforos;
 
 public class Main {
     public static void main(String[] args) {

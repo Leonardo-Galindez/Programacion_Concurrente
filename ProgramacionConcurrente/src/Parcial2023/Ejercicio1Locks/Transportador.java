@@ -1,4 +1,4 @@
-package Parcial2023.Ejercicio1;
+package Parcial2023.Ejercicio1Locks;
 
 public class Transportador implements Runnable {
 
