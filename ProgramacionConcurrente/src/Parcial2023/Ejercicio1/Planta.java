@@ -1,5 +1,4 @@
 
-
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -41,40 +40,34 @@ public class Planta {
 
     }
 
-    public void guardarBotellaVino() {
+    public void guardarVino() {
 
         try {
             vino.lock();
-
             while (contVino >= 10 || empacarV) {
                 embotelladorVino.await();
             }
-
             contVino++;
             System.out.println(Thread.currentThread().getName() + " guardo una botella de vino +");
-
             if (contVino == 10) {
                 System.out.println("CAJA DE VINO LLENA !!!");
                 empacarV = true;
                 tipo = "V";
                 empaquetador.signal();
             }
-
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
             vino.unlock();
         }
-
     }
 
-    public void guardarBotellaAgua() {
+    public void guardarAgua() {
         try {
             agua.lock();
             while (contAgua >= 10 || empacarA) {
                 embotelladorAgua.await();
             }
-
             contAgua++;
             System.out.println(Thread.currentThread().getName() + " guardo una botella de agua -");
 
@@ -84,7 +77,6 @@ public class Planta {
                 tipo = "A";
                 empaquetador.signal();
             }
-
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
@@ -93,7 +85,6 @@ public class Planta {
     }
 
     public void empaquetarCaja() {
-
         try {
             caja.lock();
             if (tipo.equals("V")) {

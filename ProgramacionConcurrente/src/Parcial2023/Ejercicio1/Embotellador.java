@@ -1,5 +1,4 @@
 
-
 public class Embotellador implements Runnable {
     private Planta planta;
     private String tipo;
@@ -10,16 +9,13 @@ public class Embotellador implements Runnable {
     }
 
     public void run() {
-        while (true) {
-            try {
-                if (tipo.equals("V")) {
-                    planta.guardarBotellaVino();
-                } else {
-                    planta.guardarBotellaAgua();
-                }
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        if (tipo.equals("V")) {
+            while (true) {
+                planta.guardarVino();
+            }
+        } else {
+            while (true) {
+                planta.guardarAgua();
             }
         }
     }

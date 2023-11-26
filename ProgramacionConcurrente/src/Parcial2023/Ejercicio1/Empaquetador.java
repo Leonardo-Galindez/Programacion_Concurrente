@@ -11,12 +11,13 @@ public class Empaquetador implements Runnable {
     public void run() {
         while (true) {
             planta.empaquetarCaja();
-            planta.reponerCaja();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            planta.reponerCaja();
+            
         }
     }
 }

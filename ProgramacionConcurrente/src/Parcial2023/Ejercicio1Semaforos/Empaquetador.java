@@ -1,6 +1,6 @@
 package Parcial2023.Ejercicio1Semaforos;
 
-public class Empaquetador {
+public class Empaquetador implements Runnable{
 
     private Planta planta;
 

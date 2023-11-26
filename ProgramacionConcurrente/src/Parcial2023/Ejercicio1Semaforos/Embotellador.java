@@ -1,6 +1,6 @@
 package Parcial2023.Ejercicio1Semaforos;
 
-public class Embotellador implements Runnable{
+public class Embotellador implements Runnable {
     private Planta planta;
     private String tipo;
 
@@ -10,17 +10,20 @@ public class Embotellador implements Runnable{
     }
 
     public void run() {
-        while (true) {
-            try {
-                if (tipo.equals("V")) {
+
+        try {
+            if (tipo.equals("V")) {
+                while (true) {
                     planta.guardarVino();
-                } else {
+                }
+            } else {
+                while (true) {
                     planta.guardarAgua();
                 }
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
+
 }
