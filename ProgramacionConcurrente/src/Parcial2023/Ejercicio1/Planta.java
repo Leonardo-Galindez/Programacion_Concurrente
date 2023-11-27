@@ -92,7 +92,7 @@ public class Planta {
             System.out.println(Thread.currentThread().getName() + " empaqueto una caja ");
             transportar.lock();
             contCajas++;
-            if (contCajas == 10) { 
+            if (contCajas == 10) {
                 empezarTransportar = true;
                 transportador.signal();// -------------problema
             }
