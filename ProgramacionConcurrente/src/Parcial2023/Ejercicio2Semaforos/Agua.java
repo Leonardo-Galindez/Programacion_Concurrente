@@ -28,7 +28,7 @@ public class Agua {
     public void hListo() throws InterruptedException {
         hidrogeno.acquire();
         System.out.println("El " + Thread.currentThread().getName() + " esta listo");
-        mutex.acquire();
+        mutex.acquire(); //para no tener falso positivo 
         contHidrogeno++;
         if (contHidrogeno == 2) {
             hListo = true;
@@ -44,7 +44,7 @@ public class Agua {
     public void oListo() throws InterruptedException {
         oxigeno.acquire();
         System.out.println("El " + Thread.currentThread().getName() + " esta listo");
-        mutex.acquire();
+        mutex.acquire(); //para no tener falso positivo 
         oListo = true;
         if (oListo && hListo && !haciendoAgua) {
             System.out.println("El " + Thread.currentThread().getName() + " mando hacer agua");
