@@ -1,12 +1,15 @@
 package ACTIVIDAD3;
 
+import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.TransferQueue;
+
 public class TransferQueueExample {
 
     /**
      * @param args
      */
     public static void main(String[] args) {
-        TransferQueue transferQueue;
+        TransferQueue transferQueue = new LinkedTransferQueue<String>();
 
         // Productor
         new Thread(() -> {
@@ -24,7 +27,7 @@ public class TransferQueueExample {
         new Thread(() -> {
             try {
                 System.out.println("Consumidor: Esperando para recibir...");
-                String receivedMessage = transferQueue.take();
+                String receivedMessage = (String) transferQueue.take();
                 System.out.println("Consumidor: Mensaje recibido - " + receivedMessage);
             } catch (InterruptedException e) {
                 e.printStackTrace();
