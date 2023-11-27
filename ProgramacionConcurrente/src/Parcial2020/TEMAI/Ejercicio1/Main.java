@@ -1,4 +1,4 @@
-package Parcial2020.TEMAI;
+package Parcial2020.TEMAI.Ejercicio1;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,10 +1,11 @@
-package Parcial2020.TEMAI;
+package Parcial2020.TEMAI.Ejercicio1;
 
 import java.util.concurrent.Semaphore;
 
 public class ControlTrasbordador {
     private Semaphore subir;
     private Semaphore bajar;
+    private Semaphore volver;
     private Semaphore mutex;
     private Semaphore transbordador;
 
@@ -15,20 +16,17 @@ public class ControlTrasbordador {
         this.subir = new Semaphore(10, true);
         this.bajar = new Semaphore(0, true);
         this.mutex = new Semaphore(1);
+        this.volver = new Semaphore(0);
         this.transbordador = new Semaphore(0);
     }
 
     // Metodos de auto
     public void subirAuto() throws InterruptedException {
-        mutex.acquire();
-        contAutosEsperando++;
-        mutex.release();
         subir.acquire();
         System.out.println(Thread.currentThread().getName() + " subio al transbordador");
         mutex.acquire();
-        contAutosEsperando--;
         contCapacidad++;
-        if (contCapacidad == 10 || contAutosEsperando == 0) {
+        if (contCapacidad == 10) {// como permitir que inicie sin que se llene=????''
             System.out.println("TRANSBORDADOR LLENO !!!");
             transbordador.release();
         }
@@ -42,7 +40,7 @@ public class ControlTrasbordador {
         contCapacidad--;
         if (contCapacidad == 0) {
             System.out.println("TRANSBORDADOR VACIO !!!");
-            subir.release(10);
+            volver.release();
         }
         mutex.release();
     }
@@ -53,8 +51,14 @@ public class ControlTrasbordador {
         System.out.println(Thread.currentThread().getName() + " inicio el viaje");
     }
 
-    public void volver() {
-        System.out.println(Thread.currentThread().getName() + " volvio del viaje");
+    public void destino() {
+        System.out.println(Thread.currentThread().getName() + " llego a destino");
         bajar.release(10);
+    }
+
+    public void volver() throws InterruptedException {
+        volver.acquire();
+        System.out.println(Thread.currentThread().getName() + " volvio del viaje");
+        subir.release(10);
     }
 }

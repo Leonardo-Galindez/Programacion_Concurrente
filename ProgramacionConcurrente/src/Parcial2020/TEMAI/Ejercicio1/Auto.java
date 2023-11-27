@@ -1,4 +1,4 @@
-package Parcial2020.TEMAI;
+package Parcial2020.TEMAI.Ejercicio1;
 
 public class Auto implements Runnable {
     private ControlTrasbordador controlTrasbordador;
