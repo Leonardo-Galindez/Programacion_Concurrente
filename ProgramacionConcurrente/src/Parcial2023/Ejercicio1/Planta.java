@@ -5,14 +5,19 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Planta {
     // consultar
-
+    // cajas y almacen
+    // 1 lock para caja y almacen
+    // 1 lock por caja y empaquetador
     // 1-para utilizar los await singal signalAll tengo que usar antes el lock de el
     // lock de la condition
     // 2- podemos tenes mas de un await en un metodo??
     // 3- el tema de la caja como la interpretamos??
     // 4- como resolver el problema de que si el agua manda y vino no puede
-    private Lock producir;
+    private Lock producirVino;
+    private Lock producirAgua;
     private Lock transportar;
+    private Lock brazo;
+    private Lock mutex;
 
     private Condition embotelladorVino;
     private Condition embotelladorAgua;
@@ -31,26 +36,31 @@ public class Planta {
 
     public Planta() {
 
-        this.producir = new ReentrantLock();
+        this.producirVino = new ReentrantLock();
+        this.producirAgua = new ReentrantLock();
         this.transportar = new ReentrantLock();
+        this.mutex = new ReentrantLock();
+        this.brazo = new ReentrantLock();
 
-        this.embotelladorVino = producir.newCondition();
-        this.embotelladorAgua = producir.newCondition();
-        this.empaquetador = producir.newCondition();
+        this.embotelladorVino = producirVino.newCondition();
+        this.embotelladorAgua = producirAgua.newCondition();
+        this.empaquetador = brazo.newCondition();
         this.transportador = transportar.newCondition();
 
     }
 
     public void guardarVino() {
         try {
-            producir.lock();
+            producirVino.lock();
             while (contVino >= 10) {
                 embotelladorVino.await();
             }
             System.out.println(Thread.currentThread().getName() + " guardo un vino +++");
+            brazo.lock();
             contVino++;
             if (contVino == 10) {
                 System.out.println("CAJA DE VINOS LLENA !!!");
+                mutex.lock();
                 empezarEmpaquetar = true;
                 reponerCajaVino = true;
                 empaquetador.signal();
@@ -58,20 +68,23 @@ public class Planta {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
-            producir.unlock();
+            brazo.unlock();
+            producirVino.unlock();
         }
     }
 
     public void guardarAgua() {
         try {
-            producir.lock();
+            producirAgua.lock();
             while (contAgua >= 10) {
                 embotelladorAgua.await();
             }
             System.out.println(Thread.currentThread().getName() + " guardo un agua ---");
+            brazo.lock();
             contAgua++;
             if (contAgua == 10) {
                 System.out.println("CAJA DE AGUA LLENA !!!");
+                mutex.lock();
                 empezarEmpaquetar = true;
                 reponerCajaAgua = true;
                 empaquetador.signal();
@@ -79,19 +92,22 @@ public class Planta {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
-            producir.unlock();
+            brazo.unlock();
+            producirAgua.unlock();
         }
     }
 
     public void empaquetarCaja() {
         try {
-            producir.lock();
+            brazo.lock();
+            //3 caosos los 2 no llenos o 1 o otro
             while (!empezarEmpaquetar) {
+                //lebera los 2 antes del bloqueo
                 empaquetador.await();
             }
             System.out.println(Thread.currentThread().getName() + " empaqueto una caja ");
             transportar.lock();
-            contCajas++;
+            contCajas++;  
             if (contCajas == 10) {
                 empezarTransportar = true;
                 transportador.signal();// -------------problema
@@ -99,14 +115,17 @@ public class Planta {
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
-            producir.unlock();
+            brazo.unlock();
             transportar.unlock();
         }
     }
 
     public void reponerCaja() {
         try {
-            producir.lock();
+            brazo.lock();
+            producirVino.lock();
+            producirAgua.lock();
+            //tomar y poner antes del await y tomar devuelta
             if (reponerCajaVino) {
                 System.out.println(Thread.currentThread().getName() + " repone una caja de Vino ");
                 contVino = 0;
@@ -119,7 +138,7 @@ public class Planta {
                 }
             }
         } finally {
-            producir.unlock();
+            brazo.unlock();
         }
     }
 

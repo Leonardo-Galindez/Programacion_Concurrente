@@ -12,6 +12,7 @@ public class Embotellador implements Runnable {
     public void run() {
 
         try {
+            
             if (tipo.equals("V")) {
                 while (true) {
                     planta.guardarVino();
