@@ -1,18 +1,15 @@
 package Parcial2020.TEMAI.Ejercicio1;
 
 public class Auto implements Runnable {
-    private ControlTrasbordador controlTrasbordador;
+    private ControlTrasnbordadorLock controlTrasbordador;
 
-    public Auto(ControlTrasbordador controlTrasbordador) {
+    public Auto(ControlTrasnbordadorLock controlTrasbordador) {
         this.controlTrasbordador = controlTrasbordador;
     }
 
     public void run() {
-        try {
-            controlTrasbordador.subirAuto();
-            controlTrasbordador.bajarAuto();
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+
+        controlTrasbordador.subirAutoLock();
+        controlTrasbordador.bajarAutoLock();
     }
 }

@@ -2,7 +2,7 @@ package Parcial2020.TEMAI.Ejercicio1;
 
 public class Main {
     public static void main(String[] args) {
-        ControlTrasbordador controlTrasbordador = new ControlTrasbordador();
+        ControlTrasnbordadorLock controlTrasbordador = new ControlTrasnbordadorLock();
 
         Thread hiloAutos[] = new Thread[25];
         Thread hiloTransbordador = new Thread(new Transbordador(controlTrasbordador), "Transbordador");

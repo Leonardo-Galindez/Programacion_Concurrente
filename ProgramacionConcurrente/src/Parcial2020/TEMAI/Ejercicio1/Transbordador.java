@@ -3,20 +3,20 @@ package Parcial2020.TEMAI.Ejercicio1;
 import java.util.Random;
 
 public class Transbordador implements Runnable{
-    private ControlTrasbordador controlTrasbordador;
+    private ControlTrasnbordadorLock controlTrasbordador;
 
-    public Transbordador(ControlTrasbordador controlTrasbordador) {
+    public Transbordador(ControlTrasnbordadorLock controlTrasbordador) {
         this.controlTrasbordador = controlTrasbordador;
     }
 
     public void run() {
         try {
             while (true) {
-                controlTrasbordador.ir();
+                controlTrasbordador.irLock();
                 Thread.sleep((new Random()).nextInt(1000) + 1000);
-                controlTrasbordador.destino();
                 viajando();
-                controlTrasbordador.volver();
+                controlTrasbordador.destinoLock();
+                controlTrasbordador.volverLock();
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();

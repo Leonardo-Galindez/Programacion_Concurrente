@@ -31,8 +31,8 @@ public class Planta {
     private boolean empezarEmpaquetar = false;
     private boolean empezarTransportar = false;
 
-    private boolean reponerCajaVino = false;
-    private boolean reponerCajaAgua = false;
+    private boolean empaquetarCajaVino = false;
+    private boolean empaquetarCajaAgua = false;
 
     public Planta() {
 
@@ -62,14 +62,16 @@ public class Planta {
                 System.out.println("CAJA DE VINOS LLENA !!!");
                 mutex.lock();
                 empezarEmpaquetar = true;
-                reponerCajaVino = true;
+                empaquetarCajaVino = true;
                 empaquetador.signal();
+            } else {
+                System.out.println("dsd");
+                producirVino.unlock();
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
             brazo.unlock();
-            producirVino.unlock();
         }
     }
 
@@ -86,31 +88,48 @@ public class Planta {
                 System.out.println("CAJA DE AGUA LLENA !!!");
                 mutex.lock();
                 empezarEmpaquetar = true;
-                reponerCajaAgua = true;
+                empaquetarCajaAgua = true;
                 empaquetador.signal();
+            } else {
+                System.out.println("ffff");
+                producirAgua.unlock();
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         } finally {
             brazo.unlock();
-            producirAgua.unlock();
         }
     }
 
     public void empaquetarCaja() {
         try {
             brazo.lock();
-            //3 caosos los 2 no llenos o 1 o otro
+            producirVino.lock();
+            producirAgua.lock();
             while (!empezarEmpaquetar) {
-                //lebera los 2 antes del bloqueo
+                brazo.unlock();
+                producirVino.unlock();
+                producirAgua.unlock();
+
                 empaquetador.await();
             }
-            System.out.println(Thread.currentThread().getName() + " empaqueto una caja ");
+            brazo.lock();
+            producirVino.lock();
+            producirAgua.lock();
+            if (empaquetarCajaVino) {
+                System.out.println(Thread.currentThread().getName() + " empaqueta una caja de Vino ");
+                producirAgua.unlock();
+            } else {
+                if (empaquetarCajaAgua) {
+                    System.out.println(Thread.currentThread().getName() + " empaqueta una caja de Agua ");
+                    producirVino.unlock();
+                }
+            }
             transportar.lock();
-            contCajas++;  
+            contCajas++;
             if (contCajas == 10) {
                 empezarTransportar = true;
-                transportador.signal();// -------------problema
+                transportador.signal();
             }
         } catch (InterruptedException ex) {
             ex.printStackTrace();
@@ -125,16 +144,20 @@ public class Planta {
             brazo.lock();
             producirVino.lock();
             producirAgua.lock();
-            //tomar y poner antes del await y tomar devuelta
-            if (reponerCajaVino) {
+            // tomar y poner antes del await y tomar devuelta
+            if (empaquetarCajaVino) {
                 System.out.println(Thread.currentThread().getName() + " repone una caja de Vino ");
                 contVino = 0;
-                embotelladorVino.signalAll();// utilizamos signal o signalAll
+                empaquetarCajaVino = false;
+                embotelladorVino.signalAll();
+                producirVino.unlock();
             } else {
-                if (reponerCajaAgua) {
+                if (empaquetarCajaAgua) {
                     System.out.println(Thread.currentThread().getName() + " repone una caja de Agua ");
                     contAgua = 0;
-                    embotelladorAgua.signalAll();// utilizamos signal o signalAll
+                    empaquetarCajaAgua = false;
+                    embotelladorAgua.signalAll();
+                    producirAgua.unlock();
                 }
             }
         } finally {
