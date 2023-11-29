@@ -12,16 +12,16 @@ import java.util.Random;
  */
 public class Perro implements Runnable {
 
-    private Comedor comedor;
+    private ComedorLock comedor;
     private static final String tipo = "P";
 
-    public Perro(Comedor comedor) {
+    public Perro(ComedorLock comedor) {
         this.comedor = comedor;
     }
 
     public void run() {
         comedor.ingresarComedor(tipo);
-        comedor.comerPerro(tipo);
+        comedor.comerPerro();
         comiendo();
         comedor.finalizarComerPerro();
     }

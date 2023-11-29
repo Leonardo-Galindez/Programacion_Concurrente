@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class Comedor {
 
-    private Semaphore perros;
+   /*  private Semaphore perros;
     private Semaphore gatos;
     private Semaphore mutexEspecie;
 
@@ -151,5 +151,5 @@ public class Comedor {
         } catch (InterruptedException ex) {
             Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }*/
 }
