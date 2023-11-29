@@ -83,7 +83,7 @@ public class ComedorLock {
                         this.turno = "G";
                         gatos.signalAll();
                     } else {
-                        if (perrosEsperando != 0 && gatosEsperando == 0) {
+                        if (perrosEsperando != 0 ) {
                             perros.signalAll();
                         } else {
                             this.turno = "G";
@@ -133,7 +133,7 @@ public class ComedorLock {
                         this.turno = "P";
                         perros.signalAll();
                     } else {
-                        if (gatosEsperando != 0 && perrosEsperando == 0) {
+                        if (gatosEsperando != 0) {
                             gatos.signalAll();
                         } else {
                             this.turno = "P";
