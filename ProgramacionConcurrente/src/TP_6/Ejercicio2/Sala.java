@@ -33,7 +33,7 @@ public class Sala {
             //hace cola para entrar  
         }
         colaSala.remove();
-               sillasOcupadas++;
+        sillasOcupadas++;
         System.out.println("Estudiante " + Thread.currentThread().getName() + " ocupo una silla");
     }
 

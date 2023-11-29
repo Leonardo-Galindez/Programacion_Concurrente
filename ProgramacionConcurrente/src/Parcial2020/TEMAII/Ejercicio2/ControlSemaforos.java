@@ -1,16 +1,21 @@
 package Parcial2020.TEMAII.Ejercicio2;
 
 public class ControlSemaforos implements Runnable {
-    private GestorCruce gestorCruce;
+    private GestorCruceSemaforo gestorCruce;
 
-    public ControlSemaforos(GestorCruce gestorCruce) {
+    public ControlSemaforos(GestorCruceSemaforo gestorCruce) {
         this.gestorCruce = gestorCruce;
     }
 
     public void run() {
         while (true) {
+            try {
+                gestorCruce.cambiarSemaforos();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             espera();
-            gestorCruce.cambiaSemaforos();
         }
     }
 

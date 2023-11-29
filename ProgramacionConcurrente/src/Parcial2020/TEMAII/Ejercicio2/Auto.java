@@ -3,9 +3,9 @@ package Parcial2020.TEMAII.Ejercicio2;
 import java.util.Random;
 
 public class Auto implements Runnable {
-    private GestorCruce gestorCruce;
+    private GestorCruceSemaforo gestorCruce;
 
-    public Auto(GestorCruce gestorCruce) {
+    public Auto(GestorCruceSemaforo gestorCruce) {
         this.gestorCruce = gestorCruce;
     }
 
@@ -13,12 +13,22 @@ public class Auto implements Runnable {
         int num = new Random().nextInt(2) + 1;
         switch (num) {
             case 1:
-                gestorCruce.llegaNorte();
+                try {
+                    gestorCruce.llegaNorte();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 cruzando();
                 gestorCruce.sale();
                 break;
             case 2:
-                gestorCruce.llegaOeste();
+                try {
+                    gestorCruce.llegaOeste();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 cruzando();
                 gestorCruce.sale();
                 break;
@@ -27,7 +37,7 @@ public class Auto implements Runnable {
 
     public void cruzando() {
         try {
-            System.out.println("Cruzando...");
+            //System.out.println("Cruzando...");
             Thread.sleep((new Random()).nextInt(1000) + 1000);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
